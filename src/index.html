@@ -1,24 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Messenger</title>
-    </head>
-    <body>
-        <div>
-            <div>
-                <h1>Вход</h1>
-                <form>
-                    <label for="login">Логин</label>
-                    <input id="login" name="login" type="text" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Messenger</title>
+    <link rel="stylesheet" href="nullify.css" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+      <div class="login_card">
+        <h1>Вход</h1>
+        <form class="login_form">
+          <div class="login_field">
+            <label for="login">Логин</label>
+            <input id="login" name="login" type="text" />
+          </div>
 
-                    <label for="password">Пароль</label>
-                    <input id="password" name="password" type="password"/>
+          <div class="login_field">
+            <label for="password">Пароль</label>
+            <input id="password" name="password" type="password" />
+          </div>
 
-                    <button type="submit">Авторизоваться</button>
-                </form>
-                <a href="">Нет аккаунта?</a>
-            </div>
-        </div>
-    </body>
+          <button type="submit" class="login_button">
+            Авторизоваться
+          </button>
+        </form>
+        <a href="" class="login_link">Нет аккаунта?</a>
+      </div>
+  </body>
 </html>
