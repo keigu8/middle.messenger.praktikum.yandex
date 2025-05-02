@@ -1,0 +1,39 @@
+.field {
+  display: flex;
+  flex-direction: column;
+
+  .field_input:focus + .field_label,
+  .field_input:not(:placeholder-shown) + .field_label {
+    transform: translate(0, calc(-100% - 2 * var(--spacing-xl) - 1em - 4px));
+  }
+}
+
+.field_input {
+  padding: var(--spacing-xl) var(--spacing-m);
+  border-radius: 4px;
+  background-color: var(--color-bg);
+  transition: transform 0.25s;
+}
+
+.field_input::placeholder {
+  color: transparent;
+}
+
+.field_input_error {
+  border: 1px solid var(--color-error);
+  background-color: var(--color-bg-error);
+}
+
+.field_input_footnote {
+  color: var(--color-error);
+
+  @mixin typography_footnote;
+}
+
+.field_label {
+  @mixin typography_text_secondary;
+
+  cursor: text;
+  transform: translate(var(--spacing-m), calc(-100% - var(--spacing-xl)));
+  transition: transform 0.2s;
+}

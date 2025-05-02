@@ -1,0 +1,33 @@
+@define-mixin typography_title {
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+@define-mixin typography_text {
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+}
+
+@define-mixin typography_text_primary {
+  color: var(--color-text-primary);
+}
+
+@define-mixin typography_text_secondary {
+  color: var(--color-text-secondary);
+}
+
+@define-mixin typography_text_accent {
+  color: var(--color-text-accent);
+  font-weight: 600;
+}
+
+@define-mixin typography_footnote {
+  font-family: Roboto, sans-serif;
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 10px;
+}

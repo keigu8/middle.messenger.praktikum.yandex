@@ -23,6 +23,7 @@
     "vite-plugin-handlebars": "^2.0.0"
   },
   "dependencies": {
-    "handlebars": "^4.7.8"
+    "handlebars": "^4.7.8",
+    "postcss-mixins": "^11.0.3"
   }
 }

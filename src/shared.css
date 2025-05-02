@@ -1,0 +1,13 @@
+@define-mixin card {
+  border-radius: 12px;
+  box-shadow: 0 0 10px var(--color-shadow);
+}
+
+@define-mixin button_mode_accent {
+  @mixin typography_text_accent;
+
+  padding: var(--spacing-xl);
+  border-radius: 8px;
+  background: var(--gradient-primary);
+  cursor: pointer;
+}

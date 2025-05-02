@@ -2,30 +2,41 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Messenger</title>
     <link rel="stylesheet" href="nullify.css" />
     <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="login.css" />
   </head>
   <body>
-      <div class="login_card">
-        <h1>Вход</h1>
-        <form class="login_form">
-          <div class="login_field">
-            <label for="login">Логин</label>
-            <input id="login" name="login" type="text" />
-          </div>
+    <div class="login_root">
+      <h1 class="login_title">Вход</h1>
+      <form class="login_form">
+        <div class="field">
+          <input
+            id="login"
+            name="login"
+            type="text"
+            class="field_input"
+            placeholder="Логин"
+          />
+          <label for="login" class="field_label">Логин</label>
+        </div>
 
-          <div class="login_field">
-            <label for="password">Пароль</label>
-            <input id="password" name="password" type="password" />
-          </div>
+        <div class="field">
+          <input
+            id="password"
+            name="password"
+            type="password"
+            class="field_input"
+            placeholder="Пароль"
+          />
+          <label for="password" class="field_label">Пароль</label>
+        </div>
 
-          <button type="submit" class="login_button">
-            Авторизоваться
-          </button>
-        </form>
-        <a href="" class="login_link">Нет аккаунта?</a>
-      </div>
+        <button type="submit" class="login_button">Авторизоваться</button>
+      </form>
+      <a href="" class="login_link">Нет аккаунта?</a>
+    </div>
   </body>
 </html>
