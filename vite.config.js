@@ -1,6 +1,9 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
 import handlebars from "vite-plugin-handlebars";
+import context from "./src/context";
+
+const pages = ["login", "signup"];
 
 export default defineConfig({
   root: resolve(__dirname, "src"),
@@ -9,8 +12,10 @@ export default defineConfig({
   },
   plugins: [
     handlebars({
-      partialDirectory: resolve(__dirname, "src/partials"),
-      context: {},
+      partialDirectory: pages
+        .map((page) => resolve(__dirname, `src/pages/${page}`))
+        .concat(resolve(__dirname, "src/components")),
+      context,
     }),
   ],
 });

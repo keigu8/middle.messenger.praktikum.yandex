@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "prettier **/*.{html,js} --check && stylelint **/*.css",
-    "lint:fix": "prettier **/*.{html,js} --write && stylelint **/*.css --fix"
+    "lint": "prettier **/*.{html,hbs,js} --check && stylelint **/*.css",
+    "lint:fix": "prettier **/*.{html,hbs,js} --write && stylelint **/*.css --fix"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",

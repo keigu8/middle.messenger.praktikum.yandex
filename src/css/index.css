@@ -1,8 +1,8 @@
-@import url("typography.css");
+@import url('../mixins/index.css');
 
 @font-face {
   font-family: Roboto;
-  src: url("fonts/Roboto_Regular.ttf");
+  src: url('fonts/Roboto_Regular.ttf');
 }
 
 :root {
