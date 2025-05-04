@@ -1,0 +1,45 @@
+@import url('../../mixins/index.css');
+
+.login {
+  &_root {
+    @mixin card;
+
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    display: flex;
+    width: 340px;
+    height: 450px;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    transform: translate(50%, -50%);
+  }
+
+  &_title {
+    @mixin typography_title;
+
+    margin: var(--spacing-xxl) 0;
+  }
+
+  &_form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: var(--spacing-xxl);
+    gap: var(--spacing-xl);
+  }
+
+  &_submit {
+    @mixin button_mode_accent;
+
+    margin-top: auto;
+  }
+
+  &_link {
+    @mixin typography_text_primary;
+
+    margin-top: var(--spacing-xxl);
+  }
+}

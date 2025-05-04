@@ -1,0 +1,9 @@
+{{#with pages.login}}
+  <div class='login_root'>
+    <h1 class='login_title'>{{title}}</h1>
+
+    {{> form context='login' }}
+
+    <a href='/signup.html' class='login_link'>{{linkTitle}}</a>
+  </div>
+{{/with}}
