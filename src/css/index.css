@@ -15,9 +15,11 @@
   --spacing-l: 10px;
   --spacing-xl: 12px;
   --spacing-xxl: 16px;
+  --spacing-xxxl: 20px;
   --color-shadow: rgb(100 100 100 / 14%);
   --color-title: rgb(30 30 30);
   --color-bg: rgb(247 247 247);
+  --color-bg-white: rgb(255 255 255);
   --color-bg-error: #f8ebeb;
   --color-text-primary: rgb(32 160 235);
   --color-text-secondary: rgb(153 153 153);
