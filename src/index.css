@@ -1,0 +1,27 @@
+@import url("typography.css");
+
+@font-face {
+  font-family: Roboto;
+  src: url("fonts/Roboto_Regular.ttf");
+}
+
+:root {
+  @mixin typography_text;
+
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-s: 6px;
+  --spacing-m: 8px;
+  --spacing-l: 10px;
+  --spacing-xl: 12px;
+  --spacing-xxl: 16px;
+  --color-shadow: rgb(100 100 100 / 14%);
+  --color-title: rgb(30 30 30);
+  --color-bg: rgb(247 247 247);
+  --color-bg-error: #f8ebeb;
+  --color-text-primary: rgb(32 160 235);
+  --color-text-secondary: rgb(153 153 153);
+  --color-text-accent: rgb(255 255 255);
+  --color-error: rgb(226 91 91);
+  --gradient-primary: linear-gradient(90deg, rgb(32 160 235), rgb(97 192 247));
+}
