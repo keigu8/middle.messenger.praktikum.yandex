@@ -20,10 +20,13 @@
   --color-title: rgb(30 30 30);
   --color-bg: rgb(247 247 247);
   --color-bg-white: rgb(255 255 255);
+  --color-bg-secondary: #EFEFEF;
+  --color-bg-accent: rgb(32 160 235);
   --color-bg-error: #f8ebeb;
   --color-text-primary: rgb(32 160 235);
   --color-text-secondary: rgb(153 153 153);
   --color-text-accent: rgb(255 255 255);
   --color-error: rgb(226 91 91);
+  --color-separator: #EAEAEA;
   --gradient-primary: linear-gradient(90deg, rgb(32 160 235), rgb(97 192 247));
 }

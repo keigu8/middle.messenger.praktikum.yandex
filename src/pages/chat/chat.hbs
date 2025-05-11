@@ -1,0 +1,26 @@
+{{#with pages.chat}}
+<div class="chat__root">
+    
+    <div class="chat__sidebar">
+        <div class="chat__header">
+        <h1 class="chat__title">{{title}}</h1>
+        <a href="/profile.html" class="chat__link">{{profile.title}}</a>
+        </div>
+
+        {{> form context='chat' form=search}}
+
+        {{> separator }}
+        <div class="chat__previews">
+            {{#each chatPreviews}}
+            {{> chatPreview }}
+            {{> separator }}
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="chat__placeholder">
+        {{placeholder}}
+    </div>
+
+</div>
+{{/with}}

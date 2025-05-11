@@ -14,7 +14,7 @@
   }
 
   &_title {
-    @mixin typography_title;
+    @mixin typography_title_1;
 
     margin: var(--spacing-xxl) 0;
   }

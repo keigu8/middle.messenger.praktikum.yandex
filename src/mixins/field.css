@@ -1,15 +1,16 @@
 .field {
   display: flex;
   flex-direction: column;
+  margin-top: 1em;
 
   .field_input:focus + .field_label,
   .field_input:not(:placeholder-shown) + .field_label {
-    transform: translate(0, calc(-100% - 2 * var(--spacing-xl) - 1em - 4px));
+    transform: translate(0, calc(-100% - 2 * var(--spacing-m) - 1em - 4px));
   }
 }
 
 .field_input {
-  padding: var(--spacing-xl) var(--spacing-m);
+  padding: var(--spacing-m) var(--spacing-m);
   border-radius: 4px;
   background-color: var(--color-bg);
   transition: transform 0.25s;
@@ -34,6 +35,6 @@
   @mixin typography_text_secondary;
 
   cursor: text;
-  transform: translate(var(--spacing-m), calc(-100% - var(--spacing-xl)));
+  transform: translate(var(--spacing-m), calc(-100% - var(--spacing-m)));
   transition: transform 0.2s;
 }

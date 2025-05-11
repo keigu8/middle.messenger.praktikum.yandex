@@ -1,16 +1,7 @@
-<form class="{{context}}_form">
+<form class="{{context}}__form">
 
   {{#each form}}
-    <div class="field">
-      <input
-        id="{{name}}"
-        name="{{name}}"
-        type="{{type}}"
-        class="field_input"
-        placeholder="{{label}}"
-      />
-      <label for="{{name}}" class="field_label">{{label}}</label>
-    </div>
+    {{>field}}
   {{/each}}
 
   <button type="submit" class="{{context}}_submit">{{submitTitle}}</button>
