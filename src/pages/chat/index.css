@@ -2,10 +2,33 @@
 
 .chat {
     &__root {
-        --previews-column-width: 310px;
+        --sidebar-width: 310px;
     }
 
-    &__previews {
-        width: var(--previews-column-width);
+    &__header {
+        padding: var(--spacing-m);
+        display: flex;
+        justify-content: space-between;
+        align-items: center
+
+    }
+
+    &__title {
+        @mixin typography_title_1;
+        
+    }
+    &__form {
+        height: auto;
+        padding: 0 var(--spacing-m);
+    }
+
+    &__sidebar {
+        width: var(--sidebar-width);
+        border-right: 1px solid var(--color-separator);
+    }
+
+    &__link {
+        @mixin typography_text_primary;
+
     }
 }
