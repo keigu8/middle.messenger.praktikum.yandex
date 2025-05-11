@@ -1,0 +1,11 @@
+@import url('../../mixins/index.css');
+
+.chat {
+    &__root {
+        --previews-column-width: 310px;
+    }
+
+    &__previews {
+        width: var(--previews-column-width);
+    }
+}

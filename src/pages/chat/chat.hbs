@@ -1,0 +1,12 @@
+{{#with pages.chat}}
+<div class="chat__root">
+    
+    <div class="chat__previews">
+        {{#each chatPreviews}}
+        {{> separator }}
+        {{> chatPreview }}
+        {{/each}}
+    </div>
+
+</div>
+{{/with}}
