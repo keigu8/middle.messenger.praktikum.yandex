@@ -8,6 +8,7 @@
 @define-mixin card {
   border-radius: 12px;
   box-shadow: 0 0 10px var(--color-shadow);
+  background-color: var(--color-bg-white);
 }
 
 @define-mixin button {
