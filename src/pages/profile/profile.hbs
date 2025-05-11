@@ -11,5 +11,13 @@
     <a href="profile_edit.html" class="profile_button">{{ editProfileButtonTitle }}</a>
     <a href="password_edit.html" class="profile_button">{{ editPasswordButtonTitle }}</a>
     <button class="profile_button profile_button--destructive">{{ logoutButtonTitle }}</button>
+
 </div>
+{{#with modal.uploadAvatar}}
+{{#> modal }}
+    <h1 class="profile_title">{{title}}</h1>
+    {{> form context="profile" }}
+    <span class="profile__error">{{error}}</span>
+{{/modal}}
+{{/with}}
 {{/with}}

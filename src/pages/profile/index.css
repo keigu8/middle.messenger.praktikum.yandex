@@ -70,4 +70,18 @@
         border-color: var(--color-error);
         color: var(--color-error);
     }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &_submit {
+        @mixin button_mode_primary;
+    }
+
+    &__error {
+        @mixin typography_footnote;
+        color: var(--color-error)
+    }
 }

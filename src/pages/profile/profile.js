@@ -34,4 +34,19 @@ export const profile = {
   editProfileButtonTitle: "Редактировать",
   editPasswordButtonTitle: "Изменить пароль",
   logoutButtonTitle: "Выйти",
+  modal: {
+    uploadAvatar: {
+      title: "Изменить аватар",
+      buttonTitle: "Загрузить",
+      form: [
+        {
+          name: "avatar",
+          label: "Файл",
+          type: "file",
+        },
+      ],
+      submitTitle: "Загрузить",
+      error: "Нужно выбрать файл",
+    },
+  },
 };
