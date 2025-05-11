@@ -16,14 +16,45 @@
         @mixin typography_title_1;
 
         margin-bottom: var(--spacing-xxxl);
+
     }
 
     &_avatar {
-        border-radius: 50%;
-
+        position: relative;
         width: 100px;
         height: 100px;
         margin: var(--spacing-xxxl) 0;
+
+        &::after {
+            @mixin typography_text_accent;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            content: attr(data-text-avatar);
+            background-color: var(--color-bg-dropdown);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        &:hover::after {
+            opacity: 1;
+        }
+    }
+
+    &_avatar-image {
+        border-radius: 50%;
+
+        width: 100%;
+        height: 100%;
+
     }
 
     &_data {

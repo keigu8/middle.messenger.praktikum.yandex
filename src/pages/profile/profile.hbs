@@ -2,7 +2,9 @@
 <div class="profile_root">
     <h1 class="profile_title">{{ title }}</h1>
     
-    <img src="{{ avatar.src }}" alt="{{ avatar.alt }}" class="profile_avatar" />
+    <div class="profile_avatar" data-text-avatar="{{avatar.text}}">
+    <img src="{{ avatar.src }}" alt="{{ avatar.alt }}" class="profile_avatar-image" />
+    </div>
 
     {{> dataView context="profile" }}
 

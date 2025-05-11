@@ -3,6 +3,7 @@ export const profile = {
   avatar: {
     src: "../../assets/avatar.png",
     alt: "Аватар профиля",
+    text: "Загрузить аватар",
   },
   data: [
     {
