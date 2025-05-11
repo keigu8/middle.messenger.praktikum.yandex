@@ -9,14 +9,18 @@
 
         {{> form context='chat' form=search}}
 
+        {{> separator }}
         <div class="chat__previews">
             {{#each chatPreviews}}
-            {{> separator }}
             {{> chatPreview }}
+            {{> separator }}
             {{/each}}
         </div>
     </div>
 
+    <div class="chat__placeholder">
+        {{placeholder}}
+    </div>
 
 </div>
 {{/with}}
