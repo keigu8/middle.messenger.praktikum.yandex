@@ -5,6 +5,7 @@
         --sidebar-width: 310px;
         height: 100%;
         display: flex;
+        justify-content: flex-start;
     }
 
     &__header {

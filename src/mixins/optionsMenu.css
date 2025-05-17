@@ -1,0 +1,16 @@
+.optionsMenu {
+    &__root {
+        @mixin card;
+
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 48px;
+        right: 4px;
+        height: fit-content;
+    }
+
+    &__item {
+        padding: var(--spacing-xl) var(--spacing-l);
+    }
+}
