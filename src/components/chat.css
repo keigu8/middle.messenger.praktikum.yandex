@@ -1,0 +1,79 @@
+.chatView {
+    &__root {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__bar {
+        display: flex;
+        padding:  var(--spacing-xl) var(--spacing-xxl);
+        align-items: center;
+    }
+
+    &__bar_position_top {
+        border-bottom: 1px solid var(--color-separator);
+    }
+
+    &__bar_position_bottom {
+        border-top: 1px solid var(--color-separator);
+    }
+
+    &__title {
+        @mixin typography_title_2;
+    }
+
+    &__button {
+        margin-left: auto;
+        cursor: pointer; 
+    }
+
+    &__messages {
+        margin-top: auto;
+        padding: var(--spacing-xxl) var(--spacing-xl);
+    }
+
+    &__date {
+        @mixin typography_text_secondary;
+        text-align: center;
+    }
+
+    &__message {
+        max-width: 50%;
+        width: fit-content;
+        padding: var(--spacing-m);
+        border-radius: 4px;
+
+    }
+
+    &__message_side_left {
+        
+        margin-right: auto;
+        background-color: var(--color-bg);
+    }
+
+    &__message_side_right {
+        margin-left: auto;
+        
+        background-color: var(--color-bg-tertiary);
+    }
+
+    &__form {
+        gap: var(--spacing-m);
+    }
+
+    &__input {
+        --radius: 16px;
+
+        flex: 1;
+        background-color:  var(--color-bg-secondary);
+        border-radius: var(--radius);
+        padding: var(--radius);
+        height: 100%;
+        max-height: 300px;
+    }
+
+    &__send {
+        @mixin button_mode_accent;
+    }
+}

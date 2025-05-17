@@ -6,3 +6,5 @@
 @import url('separator.css');
 @import url('counter.css');
 @import url('modal.css');
+@import url('../components/chat.css');
+@import url('optionsMenu.css');
