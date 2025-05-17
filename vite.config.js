@@ -3,7 +3,7 @@ import { resolve } from "path";
 import handlebars from "vite-plugin-handlebars";
 import context from "./src/context";
 
-const pages = ["login", "signup", "profile", "chat", "settings"];
+const pages = ["login", "signup", "profile", "chat", "settings", "404", "500"];
 
 export default defineConfig({
   root: resolve(__dirname, "src"),
