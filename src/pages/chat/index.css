@@ -1,4 +1,4 @@
-@import url('../../mixins/index.css');
+@import url('/css/uikit.css');
 
 .chat {
     &__root {

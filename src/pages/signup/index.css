@@ -1,7 +1,7 @@
-@import url('../../mixins/index.css');
+@import url('/css/uikit.css');
 
 .signup {
-  &_root {
+  &__root {
     @mixin card;
 
     position: absolute;
@@ -15,13 +15,13 @@
     transform: translate(50%, -50%);
   }
 
-  &_title {
+  &__title {
     @mixin typography_title_1;
 
     margin: var(--spacing-xxl) 0;
   }
 
-  &_form {
+  &__form {
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -30,13 +30,13 @@
     gap: var(--spacing-xl);
   }
 
-  &_submit {
+  &__submit {
     @mixin button_mode_accent;
 
     margin-top: var(--spacing-xxl);
   }
 
-  &_link {
+  &__link {
     @mixin typography_text_primary;
 
     margin-top: var(--spacing-xxl);

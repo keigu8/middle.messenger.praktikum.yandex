@@ -1,23 +1,26 @@
 {{#with pages.profile}}
-<div class="profile_root">
-    <h1 class="profile_title">{{ title }}</h1>
+<div class="profile__root">
+    <h1 class="profile__title">{{ title }}</h1>
     
-    <div class="profile_avatar" data-text-avatar="{{avatar.text}}">
-    <img src="{{ avatar.src }}" alt="{{ avatar.alt }}" class="profile_avatar-image" />
+    <div class="profile__avatar" data-text-avatar="{{avatar.text}}">
+    <img src="{{ avatar.src }}" alt="{{ avatar.alt }}" class="profile__avatar-image" />
     </div>
 
     {{> dataView context="profile" }}
 
-    <a href="settings.html" class="profile_button">{{ editProfileButtonTitle }}</a>
-    <a href="password_edit.html" class="profile_button">{{ editPasswordButtonTitle }}</a>
-    <button class="profile_button profile_button--destructive">{{ logoutButtonTitle }}</button>
-
+    <a href="settings.html" class="profile__button">{{ editProfileButtonTitle }}</a>
+    <a href="password.html" class="profile__button">{{ editPasswordButtonTitle }}</a>
+    <button class="profile__button profile__button--destructive">{{ logoutButtonTitle }}</button>
 </div>
+
 {{#with modal.uploadAvatar}}
-{{#> modal }}
-    <h1 class="profile_title">{{title}}</h1>
-    {{> form context="profile" }}
-    <span class="profile__error">{{error}}</span>
-{{/modal}}
+    {{#if visible}}
+        {{#> modal }}
+            <h1 class="profile__title">{{title}}</h1>
+            {{> form context="profile" }}
+            <span class="profile__error">{{error}}</span>
+        {{/modal}}
+    {{/if}}
 {{/with}}
+
 {{/with}}

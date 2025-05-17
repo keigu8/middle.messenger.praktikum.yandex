@@ -36,6 +36,7 @@
     &__date {
         @mixin typography_text_secondary;
         text-align: center;
+        margin-bottom: var(--spacing-m);
     }
 
     &__message {

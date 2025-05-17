@@ -1,7 +1,7 @@
 export const profile = {
   title: "Профиль",
   avatar: {
-    src: "../../assets/avatar.png",
+    src: "/assets/avatar.png",
     alt: "Аватар профиля",
     text: "Загрузить аватар",
   },
@@ -36,6 +36,7 @@ export const profile = {
   logoutButtonTitle: "Выйти",
   modal: {
     uploadAvatar: {
+      visible: true,
       title: "Изменить аватар",
       buttonTitle: "Загрузить",
       form: [

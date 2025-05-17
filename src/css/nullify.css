@@ -38,12 +38,12 @@ button {
   border: 0;
 }
 
-button{
-appearance: none;
-font-size: inherit;
-margin: 0;
-padding: 0;
-background-color: transparent;
+button {
+  appearance: none;
+  font-size: inherit;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
 }
 
 textarea {

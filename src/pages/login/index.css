@@ -1,7 +1,7 @@
-@import url('../../mixins/index.css');
+@import url('/css/uikit.css');
 
 .login {
-  &_root {
+  &__root {
     @mixin card;
     @mixin centered;
 
@@ -13,13 +13,13 @@
     padding: 30px;
   }
 
-  &_title {
+  &__title {
     @mixin typography_title_1;
 
     margin: var(--spacing-xxl) 0;
   }
 
-  &_form {
+  &__form {
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -28,13 +28,13 @@
     gap: var(--spacing-xl);
   }
 
-  &_submit {
+  &__submit {
     @mixin button_mode_accent;
 
     margin-top: auto;
   }
 
-  &_link {
+  &__link {
     @mixin typography_text_primary;
 
     margin-top: var(--spacing-xxl);

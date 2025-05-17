@@ -3,6 +3,7 @@ import { profile } from "./pages/profile/profile";
 import { signup } from "./pages/signup";
 import { chat } from "./pages/chat";
 import { settings } from "./pages/settings";
+import { password } from "./pages/password";
 
 export default {
   pages: {
@@ -11,5 +12,6 @@ export default {
     profile,
     chat,
     settings,
+    password,
   },
 };
