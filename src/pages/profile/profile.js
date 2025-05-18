@@ -36,7 +36,7 @@ export const profile = {
   logoutButtonTitle: "Выйти",
   modal: {
     uploadAvatar: {
-      visible: true,
+      visible: false,
       title: "Изменить аватар",
       buttonTitle: "Загрузить",
       form: [

@@ -42,11 +42,11 @@ export default function handlebars() {
           const content = fs.readFileSync(partial.path).toString();
           hbs.registerPartial(partial.name, content);
         }
-        hbs.registerHelper('if_eq', function(a, b, opts) {
+        hbs.registerHelper("if_eq", function (a, b, opts) {
           if (a == b) {
-              return opts.fn(this);
+            return opts.fn(this);
           } else {
-              return opts.inverse(this);
+            return opts.inverse(this);
           }
         });
         const template = hbs.compile(src);

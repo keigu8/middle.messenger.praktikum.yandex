@@ -4,6 +4,7 @@ import handlebars from "./plugins/handlebars";
 
 const routes = [
   "index",
+  "login",
   "signup",
   "profile",
   "chat",
