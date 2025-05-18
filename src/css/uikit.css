@@ -118,6 +118,6 @@
   --color-text-secondary: rgb(153 153 153);
   --color-text-accent: rgb(255 255 255);
   --color-error: rgb(226 91 91);
-  --color-separator: #EAEAEA;
+  --color-separator: rgb(234, 234, 234);
   --gradient-primary: linear-gradient(90deg, rgb(32 160 235), rgb(97 192 247));
 }
