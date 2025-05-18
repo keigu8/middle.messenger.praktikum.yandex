@@ -1,0 +1,34 @@
+.modal {
+    &__root {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-bg-dropdown);
+        z-index: 1;
+    }
+
+    &__card {
+        @mixin card;
+        @mixin centered;
+        width: 340px;
+        height: 260px;
+        padding: var(--spacing-l);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__title {
+        @mixin typography_title_1;
+
+        text-align: center;
+        margin-top: var(--spacing-m);
+    }
+
+    &__button {
+        @mixin button_mode_primary;
+    }
+}
