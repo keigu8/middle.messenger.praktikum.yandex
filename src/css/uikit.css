@@ -1,0 +1,123 @@
+@font-face {
+  font-family: Roboto;
+  src: url('/fonts/Roboto_Regular.ttf');
+}
+
+@define-mixin centered {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
+@define-mixin card {
+  border-radius: 12px;
+  box-shadow: 0 0 10px var(--color-shadow);
+  background-color: var(--color-bg-white);
+}
+
+@define-mixin button {
+  border-radius: 24px;
+  cursor: pointer;
+}
+
+@define-mixin button_mode_primary {
+  @mixin button;
+  @mixin typography_text_primary;
+
+  background: var(--color-bg-white);
+  font-weight: 600;
+}
+
+@define-mixin button_mode_accent {
+  @mixin button;
+  @mixin typography_text_accent;
+  padding: var(--spacing-xl);
+
+  background: var(--gradient-primary);
+}
+
+@define-mixin typography_title_1 {
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+@define-mixin typography_title_2 {
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 12px;
+}
+
+@define-mixin typography_text {
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+}
+
+@define-mixin typography_text_primary {
+  color: var(--color-text-primary);
+}
+
+@define-mixin typography_text_secondary {
+  color: var(--color-text-secondary);
+}
+
+@define-mixin typography_text_accent {
+  color: var(--color-text-accent);
+  font-weight: 600;
+}
+
+@define-mixin typography_footnote {
+  font-family: Roboto, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 10px;
+}
+
+@define-mixin typography_footnote_secondary {
+  font-family: Roboto, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 10px;
+  color: var(--color-text-secondary);
+}
+
+@define-mixin typography_footnote_accent {
+  font-family: Roboto, sans-serif;
+  font-size: 10px;
+  line-height: 10px;
+  font-weight: 600;
+  color: var(--color-text-accent);
+}
+
+:root {
+  @mixin typography_text;
+
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-s: 6px;
+  --spacing-m: 8px;
+  --spacing-l: 10px;
+  --spacing-xl: 12px;
+  --spacing-xxl: 16px;
+  --spacing-xxxl: 20px;
+  --color-shadow: rgb(100 100 100 / 14%);
+  --color-title: rgb(30 30 30);
+  --color-bg: rgb(247 247 247);
+  --color-bg-white: rgb(255 255 255);
+  --color-bg-secondary: #EFEFEF;
+  --color-bg-accent: rgb(32 160 235);
+  --color-bg-tertiary: #e4f5fd;
+  --color-bg-dropdown: rgb(100 100 100 / 80%);
+  --color-bg-error: #f8ebeb;
+  --color-text-primary: rgb(32 160 235);
+  --color-text-secondary: rgb(153 153 153);
+  --color-text-accent: rgb(255 255 255);
+  --color-error: rgb(226 91 91);
+  --color-separator: rgb(234, 234, 234);
+  --gradient-primary: linear-gradient(90deg, rgb(32 160 235), rgb(97 192 247));
+}

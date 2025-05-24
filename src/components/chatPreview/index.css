@@ -1,0 +1,45 @@
+.chatPreview {
+    &__root {
+        padding: var(--spacing-m);
+        height: 64px;
+    }
+
+    &__avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: var(--color-bg-secondary);
+        margin-right: var(--spacing-xl);
+        float: left;
+    }
+
+    &__rows {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-s);
+
+    }
+
+    &__title {
+        @mixin typography_title_2;
+
+    }
+
+    &__subtitle {
+        @mixin typography_text_secondary;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+
+    &__last {
+        @mixin typography_footnote_secondary;
+    }
+}
