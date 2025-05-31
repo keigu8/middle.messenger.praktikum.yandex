@@ -7,6 +7,6 @@ type State = {
 
 export class Counter extends View<State> {
   protected render(): string {
-    return this._state.count ? template : '';
+    return this._state.count ? template : "";
   }
 }

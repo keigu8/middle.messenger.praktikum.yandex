@@ -35,13 +35,14 @@ export abstract class View<T extends object> {
       });
     }
 
-    const rendered = this.render() || '<div style="width: 0; height: 0; opacity: 0"></div>';
+    const rendered =
+      this.render() || `<div style="width: 0; height: 0; opacity: 0"></div>`;
     this._template = hbs.compile(rendered);
     this._node = compile(this._template({ ...this._state, ...this._stubs }));
 
     keys(this._views).forEach((id) => {
-      const stub = this._node.querySelector(`div[data-viewid="${id}"]`)!;
-      if (stub.parentNode) {
+      const stub = this._node.querySelector(`div[data-viewid="${id}"]`);
+      if (stub && stub.parentNode) {
         stub.parentNode.replaceChild(this._views[id].node, stub);
       }
     });

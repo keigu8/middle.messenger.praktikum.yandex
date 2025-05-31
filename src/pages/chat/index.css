@@ -1,43 +1,43 @@
-@import url('/css/uikit.css');
+@import url("/css/uikit.css");
 
 .chat {
-    &__root {
-        --sidebar-width: 310px;
-        height: 100%;
-        display: flex;
-        justify-content: flex-start;
-    }
+  &__root {
+    --sidebar-width: 310px;
 
-    &__header {
-        padding: var(--spacing-m);
-        display: flex;
-        justify-content: space-between;
-        align-items: center
+    display: flex;
+    height: 100%;
+    justify-content: flex-start;
+  }
 
-    }
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-m);
+  }
 
-    &__title {
-        @mixin typography_title_1;
-        
-    }
-    &__form {
-        height: auto;
-        padding: 0 var(--spacing-m);
-    }
+  &__title {
+    @mixin typography_title_1;
+  }
 
-    &__sidebar {
-        width: var(--sidebar-width);
-        border-right: 1px solid var(--color-separator);
-        height: 100%;
-    }
+  &__form {
+    height: auto;
+    padding: 0 var(--spacing-m);
+  }
 
-    &__link {
-        @mixin typography_text_primary;
+  &__sidebar {
+    width: var(--sidebar-width);
+    height: 100%;
+    border-right: 1px solid var(--color-separator);
+  }
 
-    }
+  &__link {
+    @mixin typography_text_primary;
+  }
 
-    &__placeholder {
-        @mixin typography_text_secondary;
-        margin: auto;
-    }
+  &__placeholder {
+    @mixin typography_text_secondary;
+
+    margin: auto;
+  }
 }

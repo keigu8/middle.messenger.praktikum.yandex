@@ -1,21 +1,24 @@
 .error {
-    &__root {
-        @mixin centered;
-        text-align: center
-    }
+  &__root {
+    @mixin centered;
 
-    &__title {
-        @mixin typography_title_1;
-    }
+    text-align: center;
+  }
 
-    &__subtitle {
-        @mixin typography_title_2;
-        margin-top: var(--spacing-m)
-    }
+  &__title {
+    @mixin typography_title_1;
+  }
 
-    &__link {
-        @mixin typography_text_primary;
-        display: block;
-        margin-top: var(--spacing-xxxl);
-    }
+  &__subtitle {
+    @mixin typography_title_2;
+
+    margin-top: var(--spacing-m);
+  }
+
+  &__link {
+    @mixin typography_text_primary;
+
+    display: block;
+    margin-top: var(--spacing-xxxl);
+  }
 }

@@ -18,7 +18,7 @@ export class ChatPreview extends View<State> {
     });
   }
 
-  protected render(): string{
+  protected render(): string {
     return template;
   }
 }

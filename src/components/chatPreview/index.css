@@ -1,45 +1,43 @@
 .chatPreview {
-    &__root {
-        padding: var(--spacing-m);
-        height: 64px;
-    }
+  &__root {
+    height: 64px;
+    padding: var(--spacing-m);
+  }
 
-    &__avatar {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        background-color: var(--color-bg-secondary);
-        margin-right: var(--spacing-xl);
-        float: left;
-    }
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: var(--spacing-xl);
+    background-color: var(--color-bg-secondary);
+    float: left;
+  }
 
-    &__rows {
-        display: flex;
-        flex-direction: column;
-    }
+  &__rows {
+    display: flex;
+    flex-direction: column;
+  }
 
-    &__row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: var(--spacing-s);
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-s);
+  }
 
-    }
+  &__title {
+    @mixin typography_title_2;
+  }
 
-    &__title {
-        @mixin typography_title_2;
+  &__subtitle {
+    @mixin typography_text_secondary;
 
-    }
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-    &__subtitle {
-        @mixin typography_text_secondary;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
-
-    &__last {
-        @mixin typography_footnote_secondary;
-    }
+  &__last {
+    @mixin typography_footnote_secondary;
+  }
 }

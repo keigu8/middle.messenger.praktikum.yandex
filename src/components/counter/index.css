@@ -1,14 +1,14 @@
 .counter {
-    &__root {
-        --size: 20px;
+  &__root {
+    --size: 20px;
 
-        @mixin typography_footnote_accent;
+    @mixin typography_footnote_accent;
 
-        background-color: var(--color-bg-accent);
-        border-radius: 50%;
-        text-align: center;
-        height: var(--size);
-        min-width: var(--size);
-        line-height: var(--size);
-    }
+    min-width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background-color: var(--color-bg-accent);
+    line-height: var(--size);
+    text-align: center;
+  }
 }

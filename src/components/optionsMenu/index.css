@@ -1,16 +1,16 @@
 .optionsMenu {
-    &__root {
-        @mixin card;
+  &__root {
+    @mixin card;
 
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 48px;
-        right: 4px;
-        height: fit-content;
-    }
+    position: absolute;
+    top: 48px;
+    right: 4px;
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+  }
 
-    &__item {
-        padding: var(--spacing-xl) var(--spacing-l);
-    }
+  &__item {
+    padding: var(--spacing-xl) var(--spacing-l);
+  }
 }

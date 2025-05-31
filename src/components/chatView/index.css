@@ -1,80 +1,78 @@
 .chatView {
-    &__root {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
+  &__root {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
 
-    &__bar {
-        display: flex;
-        padding:  var(--spacing-xl) var(--spacing-xxl);
-        align-items: center;
-    }
+  &__bar {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-xl) var(--spacing-xxl);
+  }
 
-    &__bar_position_top {
-        border-bottom: 1px solid var(--color-separator);
-    }
+  &__bar_position_top {
+    border-bottom: 1px solid var(--color-separator);
+  }
 
-    &__bar_position_bottom {
-        border-top: 1px solid var(--color-separator);
-    }
+  &__bar_position_bottom {
+    border-top: 1px solid var(--color-separator);
+  }
 
-    &__title {
-        @mixin typography_title_2;
-    }
+  &__title {
+    @mixin typography_title_2;
+  }
 
-    &__button {
-        margin-left: auto;
-        cursor: pointer; 
-    }
+  &__button {
+    margin-left: auto;
+    cursor: pointer;
+  }
 
-    &__messages {
-        margin-top: auto;
-        padding: var(--spacing-xxl) var(--spacing-xl);
-    }
+  &__messages {
+    padding: var(--spacing-xxl) var(--spacing-xl);
+    margin-top: auto;
+  }
 
-    &__date {
-        @mixin typography_text_secondary;
-        text-align: center;
-        margin-bottom: var(--spacing-m);
-    }
+  &__date {
+    @mixin typography_text_secondary;
 
-    &__message {
-        max-width: 50%;
-        width: fit-content;
-        padding: var(--spacing-m);
-        border-radius: 4px;
+    margin-bottom: var(--spacing-m);
+    text-align: center;
+  }
 
-    }
+  &__message {
+    width: fit-content;
+    max-width: 50%;
+    padding: var(--spacing-m);
+    border-radius: 4px;
+  }
 
-    &__message_side_left {
-        
-        margin-right: auto;
-        background-color: var(--color-bg);
-    }
+  &__message_side_left {
+    margin-right: auto;
+    background-color: var(--color-bg);
+  }
 
-    &__message_side_right {
-        margin-left: auto;
-        
-        background-color: var(--color-bg-tertiary);
-    }
+  &__message_side_right {
+    margin-left: auto;
+    background-color: var(--color-bg-tertiary);
+  }
 
-    &__form {
-        gap: var(--spacing-m);
-    }
+  &__form {
+    gap: var(--spacing-m);
+  }
 
-    &__input {
-        --radius: 16px;
+  &__input {
+    --radius: 16px;
 
-        flex: 1;
-        background-color:  var(--color-bg-secondary);
-        border-radius: var(--radius);
-        padding: var(--radius);
-        height: 100%;
-        max-height: 300px;
-    }
+    height: 100%;
+    max-height: 300px;
+    flex: 1;
+    padding: var(--radius);
+    border-radius: var(--radius);
+    background-color: var(--color-bg-secondary);
+  }
 
-    &__send {
-        @mixin button_mode_accent;
-    }
+  &__send {
+    @mixin button_mode_accent;
+  }
 }
