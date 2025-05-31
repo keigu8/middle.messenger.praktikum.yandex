@@ -8,9 +8,9 @@ type State = {
 };
 
 export class Field extends View<State> {
-    constructor(state: State) {
-        super(state);
-    }
+  constructor(state: State) {
+    super(state);
+  }
 
   protected render(): string {
     return template;

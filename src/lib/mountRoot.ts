@@ -1,9 +1,9 @@
 export function mountRoot(element: HTMLElement) {
-    const root = document.getElementById("root");
+  const root = document.getElementById("root");
 
-    if (!root) {
-        throw new Error('No root element');
-    }
-    
-    root.appendChild(element);
+  if (!root) {
+    throw new Error("No root element");
+  }
+
+  root.appendChild(element);
 }

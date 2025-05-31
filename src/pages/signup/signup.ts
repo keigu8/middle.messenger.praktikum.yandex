@@ -1,6 +1,6 @@
 import { Form } from "../../components/form/form";
 import { View } from "../../lib/view";
-import template from './signup.hbs?raw';
+import template from "./signup.hbs?raw";
 
 export const signup = {
   title: "Регистрация",
@@ -43,14 +43,14 @@ export const signup = {
 type State = typeof signup;
 
 export class SignupPage extends View<State> {
-    constructor(state: State) {
-      super(state, {
-        Form: new Form({
-          fields: state.fields,
-          submitTitle: state.submitTitle,
-        }),
-      });
-    }
+  constructor(state: State) {
+    super(state, {
+      Form: new Form({
+        fields: state.fields,
+        submitTitle: state.submitTitle,
+      }),
+    });
+  }
 
   protected render(): string {
     return template;

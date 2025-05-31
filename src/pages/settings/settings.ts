@@ -1,6 +1,10 @@
+import { Form } from "../../components/form/form";
+import { View } from "../../lib/view";
+import template from "./settings.hbs?raw";
+
 export const settings = {
   title: "Настройки",
-  form: [
+  fields: [
     {
       name: "first_name",
       label: "Имя",
@@ -37,3 +41,20 @@ export const settings = {
   ],
   submitTitle: "Сохранить",
 };
+
+type State = typeof settings;
+
+export class SettingsPage extends View<State> {
+  constructor(state: State) {
+    super(state, {
+      Form: new Form({
+        fields: state.fields,
+        submitTitle: state.submitTitle,
+      }),
+    });
+  }
+
+  protected render(): string {
+    return template;
+  }
+}
