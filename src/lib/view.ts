@@ -38,8 +38,8 @@ export abstract class View<T extends object> {
     const rendered =
       this.render() || `<div style="width: 0; height: 0; opacity: 0"></div>`;
     this._template = hbs.compile(rendered);
-    this._node = compile(this._template({ ...this._state, ...this._stubs }));
 
+    this._node = compile(this._template({ ...this._state, ...this._stubs }));
     keys(this._views).forEach((id) => {
       const stub = this._node.querySelector(`div[data-viewid="${id}"]`);
       if (stub && stub.parentNode) {
@@ -48,14 +48,20 @@ export abstract class View<T extends object> {
     });
   }
 
-  private _mount() {
+  private _mount(parent: HTMLElement) {
     this._node = compile(this._template({ ...this._state, ...this._stubs }));
+    keys(this._views).forEach((id) => {
+      const stub = this._node.querySelector(`div[data-viewid="${id}"]`);
+      if (stub && stub.parentNode) {
+        stub.parentNode.replaceChild(this._views[id].node, stub);
+      }
+    });
+
+    parent.appendChild(this._node);
   }
 
-  private _unmount() {
-    if (this._node.parentNode) {
-      this._node.parentNode.removeChild(this._node);
-    }
+  private _unmount(parent: HTMLElement) {
+    parent.removeChild(this._node);
   }
 
   protected abstract render(): string;
@@ -68,17 +74,17 @@ export abstract class View<T extends object> {
     return this._node;
   }
 
-  public updateState(state: Partial<T>) {
-    this._state = { ...this._state, ...state };
-    this._unmount();
-    this._mount();
+  protected get state() {
+    return this._state;
+  }
 
-    // if (this._views) {
-    //   for (const key in this._views) {
-    //     this._views[key].updateState(state);
-    //     const stub = this._node.querySelector(`[data-viewid=${key}]`)!;
-    //     this._node.replaceChild(this._views[key].node, stub);
-    //   }
-    // }
+  public updateState(updator: (state: T) => T) {
+    this._state = updator(this._state);
+
+    const parent = this._node.parentElement;
+    if (parent) {
+      this._unmount(parent);
+      this._mount(parent);
+    }
   }
 }

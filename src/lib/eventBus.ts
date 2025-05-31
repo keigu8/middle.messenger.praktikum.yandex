@@ -23,7 +23,7 @@ export default class EventBus {
     );
 
     if (!this._listeners[event]) {
-        delete this._listeners[event];
+      delete this._listeners[event];
     }
   }
 
