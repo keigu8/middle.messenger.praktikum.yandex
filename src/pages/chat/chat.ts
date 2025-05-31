@@ -1,3 +1,11 @@
+import { ChatPreview } from "../../components/chatPreview/chatPreview";
+import { ChatView } from "../../components/chatView/chatView";
+import { Form } from "../../components/form/form";
+import { OptionsMenu } from "../../components/optionsMenu/optionsMenu";
+import { Separator } from "../../components/separator/separator";
+import { View } from "../../lib/view";
+import template from './chat.hbs?raw';
+
 export const chat = {
   title: "Чат",
   profile: {
@@ -7,6 +15,7 @@ export const chat = {
     {
       name: "search",
       label: "Поиск",
+      type: "text",
     },
   ],
   chatPreviews: [
@@ -85,3 +94,24 @@ export const chat = {
   },
   optionsMenu: ["Добавить пользователя", "Удалить пользователя"],
 };
+
+type State = typeof chat;
+
+export class ChatPage extends View<State> {
+  constructor(state: State) {
+    super(state, {
+      Form: new Form({
+        fields: state.search,
+        submitTitle: '',
+      }),
+      Separator: new Separator(),
+      ChatPreviews: state.chatPreviews.map(chatPreview => new ChatPreview(chatPreview)),
+      ChatView: new ChatView(state.chatInfo),
+      OptionsMenu: new OptionsMenu({ optionsMenu: state.optionsMenu }),
+    })
+  }
+
+  protected render(): string {
+    return template;
+  }
+}

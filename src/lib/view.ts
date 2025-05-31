@@ -20,6 +20,7 @@ export abstract class View<T extends object> {
     this._state = state;
 
     if (views) {
+      debugger;
       keys(views).forEach((key) => {
         if (Array.isArray(views[key])) {
           views[key].forEach((view) => {
@@ -40,7 +41,9 @@ export abstract class View<T extends object> {
 
     keys(this._views).forEach((id) => {
       const stub = this._node.querySelector(`div[data-viewid="${id}"]`)!;
-      this._node.replaceChild(this._views[id].node, stub);
+      if (stub.parentNode) {
+        stub.parentNode.replaceChild(this._views[id].node, stub);
+      }
     });
   }
 
