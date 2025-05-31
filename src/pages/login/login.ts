@@ -1,6 +1,10 @@
+import { Form } from "../../components/form/form";
+import { View } from "../../lib/view";
+import template from "./login.hbs?raw";
+
 export const login = {
   title: "Вход",
-  form: [
+  fields: [
     {
       name: "login",
       label: "Логин",
@@ -15,3 +19,20 @@ export const login = {
   submitTitle: "Войти",
   linkTitle: "Ещё не зарегистрированы?",
 };
+
+type State = typeof login;
+
+export class LoginPage extends View<State> {
+  constructor(state: State) {
+    super(state, {
+      Form: new Form({
+        fields: state.fields,
+        submitTitle: state.submitTitle,
+      }),
+    });
+  }
+
+  protected render(): string {
+    return template;
+  }
+}

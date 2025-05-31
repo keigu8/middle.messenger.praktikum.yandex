@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc && vite build",
     "start": "npm run build && node ./server.js",
+    "dev": "vite",
     "lint": "prettier **/*.{html,hbs,ts} --check && stylelint **/*.css",
     "lint:fix": "prettier **/*.{html,hbs,ts} --write && stylelint **/*.css --fix"
   },

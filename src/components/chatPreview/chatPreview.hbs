@@ -1,17 +1,17 @@
 <div class="chatPreview__root">
-    <div class="chatPreview__avatar"></div>
-    <div class="chatPreview__rows">
+  <div class="chatPreview__avatar"></div>
+  <div class="chatPreview__rows">
     <div class="chatPreview__row">
-        <h2 class="chatPreview__title">
-            {{title}}
-        </h2>
-        <span class="chatPreview__last">{{last}}</span>
+      <h2 class="chatPreview__title">
+        {{title}}
+      </h2>
+      <span class="chatPreview__last">{{last}}</span>
     </div>
     <div class="chatPreview__row">
-        <span class="chatPreview__subtitle">{{subtitle}}</span>
-          {{#if count}}
-            {{> counter }}
-            {{/if}}
+      <span class="chatPreview__subtitle">{{subtitle}}</span>
+      {{#if count}}
+        {{Counter}}
+      {{/if}}
     </div>
-    </div>
+  </div>
 </div>

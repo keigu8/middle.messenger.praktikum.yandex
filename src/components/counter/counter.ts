@@ -1,8 +1,8 @@
-import { View } from "../../core/view";
+import { View } from "../../lib/view";
 import template from "./counter.hbs?raw";
 
 type State = {
-  count: number;
+  count?: number;
 };
 
 export class Counter extends View<State> {
