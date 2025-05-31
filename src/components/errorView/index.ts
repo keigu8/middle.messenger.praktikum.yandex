@@ -1,5 +1,6 @@
 import { View } from "../../lib/view";
 import template from "./errorView.hbs?raw";
+import "./index.css";
 
 export type State = {
   title: string;

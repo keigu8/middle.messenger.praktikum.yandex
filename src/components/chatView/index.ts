@@ -1,5 +1,6 @@
 import { View } from "../../lib/view";
 import template from "./chatView.hbs?raw";
+import "./index.css";
 
 type State = {
   title: string;

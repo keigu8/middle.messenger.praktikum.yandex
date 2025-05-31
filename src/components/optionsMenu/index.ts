@@ -1,5 +1,6 @@
 import { View } from "../../lib/view";
 import template from "./optionsMenu.hbs?raw";
+import "./index.css";
 
 type State = {
   optionsMenu: string[];

@@ -1,6 +1,7 @@
 import { View } from "../../lib/view";
-import { Counter } from "../counter/counter";
+import { Counter } from "../counter";
 import template from "./chatPreview.hbs?raw";
+import "./index.css";
 
 type State = {
   title: string;

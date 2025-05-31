@@ -1,4 +1,4 @@
-import { ErrorView } from "../../components/errorView/errorView";
+import { ErrorView } from "../../components/errorView";
 import { mountRoot } from "../../lib/mountRoot";
 
 const page500 = new ErrorView({

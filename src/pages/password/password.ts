@@ -1,4 +1,4 @@
-import { Form } from "../../components/form/form";
+import { Form } from "../../components/form";
 import { View } from "../../lib/view";
 import template from "./password.hbs?raw";
 
@@ -27,6 +27,7 @@ export class PasswordPage extends View<State> {
       Form: new Form({
         fields: state.fields,
         submitTitle: state.submitTitle,
+        context: "password",
       }),
     });
   }

@@ -1,5 +1,5 @@
-import { Modal } from "../../components/modal/modal";
-import { Table } from "../../components/table/table";
+import { Modal } from "../../components/modal";
+import { Table } from "../../components/table";
 import { UploadAvatarModalContent } from "../../components/uploadAvatarModalContent";
 import { View } from "../../lib/view";
 import template from "./profile.hbs?raw";
@@ -42,7 +42,7 @@ export const profile = {
   logoutButtonTitle: "Выйти",
   modal: {
     uploadAvatar: {
-      visible: true,
+      visible: false,
       content: {
         title: "Изменить аватар",
         buttonTitle: "Загрузить",

@@ -1,3 +1,5 @@
+@import url("../../css/uikit.css");
+
 .modal {
   &__root {
     position: fixed;

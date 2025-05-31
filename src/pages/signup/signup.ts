@@ -1,4 +1,4 @@
-import { Form } from "../../components/form/form";
+import { Form } from "../../components/form";
 import { View } from "../../lib/view";
 import template from "./signup.hbs?raw";
 
@@ -48,6 +48,7 @@ export class SignupPage extends View<State> {
       Form: new Form({
         fields: state.fields,
         submitTitle: state.submitTitle,
+        context: "signup",
       }),
     });
   }

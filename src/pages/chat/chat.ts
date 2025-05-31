@@ -1,8 +1,8 @@
-import { ChatPreview } from "../../components/chatPreview/chatPreview";
-import { ChatView } from "../../components/chatView/chatView";
-import { Form } from "../../components/form/form";
-import { OptionsMenu } from "../../components/optionsMenu/optionsMenu";
-import { Separator } from "../../components/separator/separator";
+import { ChatPreview } from "../../components/chatPreview";
+import { ChatView } from "../../components/chatView";
+import { Form } from "../../components/form";
+import { OptionsMenu } from "../../components/optionsMenu";
+import { Separator } from "../../components/separator";
 import { View } from "../../lib/view";
 import template from "./chat.hbs?raw";
 
@@ -103,6 +103,7 @@ export class ChatPage extends View<State> {
       Form: new Form({
         fields: state.search,
         submitTitle: "",
+        context: "chat",
       }),
       Separator: new Separator(),
       ChatPreviews: state.chatPreviews.map(

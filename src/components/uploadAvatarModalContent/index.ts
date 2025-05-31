@@ -1,5 +1,5 @@
 import { View } from "../../lib/view";
-import { Form } from "../form/form";
+import { Form } from "../form";
 import template from "./uploadAvatarModalContent.hbs?raw";
 
 type State = {
@@ -17,7 +17,11 @@ type State = {
 export class UploadAvatarModalContent extends View<State> {
   constructor(state: State) {
     super(state, {
-      Form: new Form({ fields: state.fields, submitTitle: state.submitTitle }),
+      Form: new Form({
+        fields: state.fields,
+        submitTitle: state.submitTitle,
+        context: "",
+      }),
     });
   }
 
