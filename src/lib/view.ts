@@ -5,7 +5,7 @@ import { keys } from "./keys";
 
 export abstract class View<T extends object> {
   private _id: number;
-  private _state: T;
+  protected _state: T;
   private _stubs: Record<string, string> = {};
   private _views: Record<string, View<object>> = {};
   private _template: HandlebarsTemplateDelegate;
@@ -20,7 +20,6 @@ export abstract class View<T extends object> {
     this._state = state;
 
     if (views) {
-      debugger;
       keys(views).forEach((key) => {
         if (Array.isArray(views[key])) {
           views[key].forEach((view) => {
@@ -36,7 +35,8 @@ export abstract class View<T extends object> {
       });
     }
 
-    this._template = hbs.compile(this.render());
+    const rendered = this.render() || '<div style="width: 0; height: 0; opacity: 0"></div>';
+    this._template = hbs.compile(rendered);
     this._node = compile(this._template({ ...this._state, ...this._stubs }));
 
     keys(this._views).forEach((id) => {

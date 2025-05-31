@@ -7,18 +7,18 @@ type State = {
   subtitle: string;
   last: string;
   count?: number;
-}
+};
 
 export class ChatPreview extends View<State> {
   constructor(state: State) {
     super(state, {
       Counter: new Counter({
         count: state.count,
-      })
-    })
+      }),
+    });
   }
-  
-  protected render(): string {
+
+  protected render(): string{
     return template;
   }
 }

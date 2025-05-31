@@ -4,7 +4,7 @@ import { Form } from "../../components/form/form";
 import { OptionsMenu } from "../../components/optionsMenu/optionsMenu";
 import { Separator } from "../../components/separator/separator";
 import { View } from "../../lib/view";
-import template from './chat.hbs?raw';
+import template from "./chat.hbs?raw";
 
 export const chat = {
   title: "Чат",
@@ -102,13 +102,15 @@ export class ChatPage extends View<State> {
     super(state, {
       Form: new Form({
         fields: state.search,
-        submitTitle: '',
+        submitTitle: "",
       }),
       Separator: new Separator(),
-      ChatPreviews: state.chatPreviews.map(chatPreview => new ChatPreview(chatPreview)),
+      ChatPreviews: state.chatPreviews.map(
+        (chatPreview) => new ChatPreview(chatPreview),
+      ),
       ChatView: new ChatView(state.chatInfo),
       OptionsMenu: new OptionsMenu({ optionsMenu: state.optionsMenu }),
-    })
+    });
   }
 
   protected render(): string {
