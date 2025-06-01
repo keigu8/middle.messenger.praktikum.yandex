@@ -20,6 +20,7 @@ export default defineConfig({
     // eslint-disable-next-line
     outDir: resolve(__dirname, "dist"),
     rollupOptions: {
+      // eslint-disable-next-line
       input: routes.map((route) => resolve(__dirname, `src/${route}.html`)),
     },
   },
