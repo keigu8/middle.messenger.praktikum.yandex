@@ -7,5 +7,6 @@ export default {
   ],
   rules: {
     "selector-class-pattern": null,
+    "at-rule-no-unknown": null
   },
 };

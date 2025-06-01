@@ -73,6 +73,7 @@ export abstract class View<T extends object> {
         const value = target[property as keyof T];
         return typeof value === "function" ? value.bind(target) : value;
       },
+      // eslint-disable-next-line
       set(target: T, property: string, value: any) {
         const oldTarget = { ...target };
         target[property as keyof T] = value;
@@ -99,7 +100,7 @@ export abstract class View<T extends object> {
       handlerNode = this._node.querySelector(this._handlerNodeSelector)!;
     }
     keys(this._handlers).forEach((handler) => {
-      //@ts-ignore
+      //@ts-expect-error 
       handlerNode?.addEventListener(handler, this._handlers[handler]);
     });
 
@@ -150,7 +151,7 @@ export abstract class View<T extends object> {
       handlerNode = this._node.querySelector(this._handlerNodeSelector)!;
     }
     keys(this._handlers).forEach((handler) => {
-      //@ts-ignore
+      //@ts-expect-error
       handlerNode?.removeEventListener(handler, this._handlers[handler]);
     });
 
