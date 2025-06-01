@@ -7,11 +7,14 @@
     "build": "tsc && vite build",
     "start": "npm run build && node ./server.js",
     "dev": "vite",
-    "lint": "prettier **/*.{html,hbs,ts} --check && stylelint **/*.css",
+    "lint": "eslint src/**/*{ts,tsx} && stylelint **/*.css",
     "lint:fix": "prettier **/*.{html,hbs,ts} --write && stylelint **/*.css --fix"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.33.0",
+    "@typescript-eslint/parser": "^8.33.0",
     "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.1",
     "handlebars": "^4.7.8",
     "postcss": "^8.5.3",
     "postcss-mixins": "^11.0.3",

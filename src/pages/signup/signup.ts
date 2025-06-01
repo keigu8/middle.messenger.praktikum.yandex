@@ -27,7 +27,7 @@ const form: FormState = {
       label: "Почта",
       type: "text",
       value: "",
-      regexp: new RegExp(/^[A-Za-z0-9_\-]+@[A-Za-z]+\.[A-Za-z]{2,}$/),
+      regexp: new RegExp(/^[A-Za-z0-9_-]+@[A-Za-z]+\.[A-Za-z]{2,}$/),
     },
     phone: {
       label: "Телефон",
@@ -68,7 +68,7 @@ export class SignupPage extends View<State> {
           context: "signup",
         },
         (field: string, value: string) => {
-          this.updateState((state) => ({
+          this.updateState((state: State) => ({
             ...state,
             fields: {
               ...state.fields,
