@@ -1,31 +1,30 @@
-{{#with chatInfo}}
-  <div class="chatView__root">
-    <div class="chatView__bar chatView__bar_position_top">
-      <h2 class="chatView__title">
-        {{title}}
-      </h2>
-      <button class="chatView__button"><img
-          src="/assets/menu.svg"
-          alt="Меню чата"
-        /></button>
-    </div>
-    <div class="chatView__messages">
-      {{#each messagesByDate}}
-        <h3 class="chatView__date">{{date}}</h3>
-        {{#each messages}}
-          <p
-            class="chatView__message chatView__message_side_{{side}}"
-          >{{content}}</p>
-        {{/each}}
-      {{/each}}
-    </div>
-    <form class="chatView__bar chatView__bar_position_bottom chatView__form">
-      <textarea
-        class="chatView__input"
-        placeholder="{{inputPlaceholder}}"
-        name="message"
-      ></textarea>
-      <button class="chatView__send">{{sendTitle}}</button>
-    </form>
+<div class="chatView__root">
+  <div class="chatView__bar chatView__bar_position_top">
+    <h2 class="chatView__title">
+      {{title}}
+    </h2>
+    <button class="chatView__button"><img
+        src="/assets/menu.svg"
+        alt="Меню чата"
+      /></button>
   </div>
-{{/with}}
+  <div class="chatView__messages">
+    {{#each messagesByDate}}
+      <h3 class="chatView__date">{{date}}</h3>
+      {{#each messages}}
+        <p
+          class="chatView__message chatView__message_side_{{side}}"
+        >{{content}}</p>
+      {{/each}}
+    {{/each}}
+  </div>
+  <form class="chatView__bar chatView__bar_position_bottom chatView__form">
+    <textarea
+      class="chatView__input"
+      placeholder="{{inputPlaceholder}}"
+      name="message"
+      value="{{value}}"
+    ></textarea>
+    {{{Button}}}
+  </form>
+</div>

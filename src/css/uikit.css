@@ -1,6 +1,6 @@
 @font-face {
   font-family: Roboto;
-  src: url('/fonts/Roboto_Regular.ttf');
+  src: url("/fonts/Roboto_Regular.ttf");
 }
 
 @define-mixin centered {
@@ -12,8 +12,8 @@
 
 @define-mixin card {
   border-radius: 12px;
-  box-shadow: 0 0 10px var(--color-shadow);
   background-color: var(--color-bg-white);
+  box-shadow: 0 0 10px var(--color-shadow);
 }
 
 @define-mixin button {
@@ -32,8 +32,8 @@
 @define-mixin button_mode_accent {
   @mixin button;
   @mixin typography_text_accent;
-  padding: var(--spacing-xl);
 
+  padding: var(--spacing-xl);
   background: var(--gradient-primary);
 }
 
@@ -79,19 +79,19 @@
 }
 
 @define-mixin typography_footnote_secondary {
+  color: var(--color-text-secondary);
   font-family: Roboto, sans-serif;
   font-size: 10px;
   font-weight: 400;
   line-height: 10px;
-  color: var(--color-text-secondary);
 }
 
 @define-mixin typography_footnote_accent {
+  color: var(--color-text-accent);
   font-family: Roboto, sans-serif;
   font-size: 10px;
-  line-height: 10px;
   font-weight: 600;
-  color: var(--color-text-accent);
+  line-height: 10px;
 }
 
 :root {
@@ -109,7 +109,7 @@
   --color-title: rgb(30 30 30);
   --color-bg: rgb(247 247 247);
   --color-bg-white: rgb(255 255 255);
-  --color-bg-secondary: #EFEFEF;
+  --color-bg-secondary: #efefef;
   --color-bg-accent: rgb(32 160 235);
   --color-bg-tertiary: #e4f5fd;
   --color-bg-dropdown: rgb(100 100 100 / 80%);
@@ -118,6 +118,6 @@
   --color-text-secondary: rgb(153 153 153);
   --color-text-accent: rgb(255 255 255);
   --color-error: rgb(226 91 91);
-  --color-separator: #EAEAEA;
+  --color-separator: rgb(234 234 234);
   --gradient-primary: linear-gradient(90deg, rgb(32 160 235), rgb(97 192 247));
 }
