@@ -100,7 +100,7 @@ export abstract class View<T extends object> {
       handlerNode = this._node.querySelector(this._handlerNodeSelector)!;
     }
     keys(this._handlers).forEach((handler) => {
-      //@ts-expect-error 
+      //@ts-expect-error key exists on handler
       handlerNode?.addEventListener(handler, this._handlers[handler]);
     });
 
@@ -151,7 +151,7 @@ export abstract class View<T extends object> {
       handlerNode = this._node.querySelector(this._handlerNodeSelector)!;
     }
     keys(this._handlers).forEach((handler) => {
-      //@ts-expect-error
+      //@ts-expect-error key exists on handler
       handlerNode?.removeEventListener(handler, this._handlers[handler]);
     });
 

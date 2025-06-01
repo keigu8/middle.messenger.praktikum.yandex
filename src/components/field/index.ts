@@ -18,7 +18,7 @@ export class Field extends View<State> {
       undefined,
       {
         blur: (event: FocusEvent) => {
-          //@ts-expect-error
+          //@ts-expect-error target.value exists on FocusEvent
           const value = event.target.value;
           onBlur(value);
           if (this.state.regexp && !this.state.regexp.test(value)) {
