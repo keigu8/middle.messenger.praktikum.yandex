@@ -4,7 +4,16 @@ import { Field } from "../field";
 import template from "./form.hbs?raw";
 
 export type FormState = {
-  fields: Record<string, { label: string; type: string; value: string }>;
+  fields: Record<
+    string,
+    {
+      label: string;
+      type: string;
+      value: string;
+      regexp?: RegExp;
+      isError?: boolean;
+    }
+  >;
   submitTitle: string;
   context: string;
 };
@@ -12,7 +21,8 @@ export type FormState = {
 export class Form extends View<FormState> {
   constructor(
     state: FormState,
-    onSubmit: (values: FormState['fields']) => void,
+    onBlur: (field: string, value: string) => void,
+    onSubmit: (values: FormState["fields"]) => void,
   ) {
     super(state, {
       Fields: Object.keys(state.fields).map(
@@ -23,13 +33,7 @@ export class Form extends View<FormState> {
               ...state.fields[fieldName],
             },
             (value: string) => {
-              this.updateState((state) => ({
-                ...state,
-                fields: {
-                  ...state.fields,
-                  [fieldName]: { ...state.fields[fieldName], value },
-                },
-              }));
+              onBlur(fieldName, value);
             },
           ),
       ),

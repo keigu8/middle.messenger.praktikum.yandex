@@ -7,6 +7,8 @@ type State = {
   label: string;
   type: string;
   value: string;
+  regexp?: RegExp;
+  isError?: boolean;
 };
 
 export class Field extends View<State> {
@@ -17,8 +19,14 @@ export class Field extends View<State> {
       {
         blur: (event: FocusEvent) => {
           //@ts-ignore
-          onBlur(event.target.value);
-        }
+          const value = event.target.value;
+          onBlur(value);
+          if (this.state.regexp && !this.state.regexp.test(this.state.value)) {
+            this.updateState((state) => ({ ...state, value, isError: true }));
+          } else {
+            this.updateState((state) => ({ ...state, value, isError: true }));
+          }
+        },
       },
       ".field__input",
     );

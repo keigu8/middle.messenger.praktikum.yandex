@@ -6,7 +6,7 @@ import EventBus from "./eventBus";
 
 type Handlers = Partial<{
   [P in keyof HTMLElementEventMap]?: (event: HTMLElementEventMap[P]) => void;
-}>
+}>;
 
 export abstract class View<T extends object> {
   static Lifecycle = {
@@ -98,12 +98,12 @@ export abstract class View<T extends object> {
     if (this._handlerNodeSelector) {
       handlerNode = this._node.querySelector(this._handlerNodeSelector)!;
     }
-    keys(this._handlers).forEach(handler => {
+    keys(this._handlers).forEach((handler) => {
       //@ts-ignore
       handlerNode?.addEventListener(handler, this._handlers[handler]);
     });
 
-    if (parent && position) {
+    if (parent && position !== null) {
       parent.insertBefore(this._node, parent.childNodes[position]);
     }
     this._eventBus.emit(View.Lifecycle.Cdm);
@@ -125,7 +125,8 @@ export abstract class View<T extends object> {
 
   private _render() {
     const parent = this._node && this._node.parentElement;
-    const position = parent && Array.from(parent.childNodes).indexOf(this._node);
+    const position =
+      parent && Array.from(parent.childNodes).indexOf(this._node);
 
     if (this._node) {
       this._unmount(parent);
@@ -148,7 +149,7 @@ export abstract class View<T extends object> {
     if (this._handlerNodeSelector) {
       handlerNode = this._node.querySelector(this._handlerNodeSelector)!;
     }
-    keys(this._handlers).forEach(handler => {
+    keys(this._handlers).forEach((handler) => {
       //@ts-ignore
       handlerNode?.removeEventListener(handler, this._handlers[handler]);
     });
