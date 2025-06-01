@@ -8,13 +8,13 @@ const form: FormState = {
     login: {
       label: "Логин",
       type: "text",
-      regexp: new RegExp(/^(?=.*[a-zA-Z])[w-]{3,20}$/),
+      regexp: new RegExp(/^[a-zA-Z0-9-]{3,20}$/),
       value: "",
     },
     password: {
       label: "Пароль",
       type: "password",
-      regexp: new RegExp(/^(?=.*[a-zA-Z])[w-]{3,20}$/),
+      regexp: new RegExp(/^(?=.*[0-9])(?=.*[A-Z])([a-zA-Z0-9]+)$/),
       value: "",
     },
   },
