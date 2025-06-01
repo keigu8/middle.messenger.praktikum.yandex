@@ -1,0 +1,14 @@
+.table {
+  display: grid;
+  gap: var(--spacing-xl) var(--spacing-xxl);
+  grid-template-columns: 1fr 2fr;
+
+  &__label {
+    font-weight: 600;
+    text-align: end;
+  }
+
+  &__value {
+    color: var(--color-text-secondary);
+  }
+}

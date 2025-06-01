@@ -1,3 +1,9 @@
+import { Modal } from "../../components/modal";
+import { Table } from "../../components/table";
+import { UploadAvatarModalContent } from "../../components/uploadAvatarModalContent";
+import { View } from "../../lib/view";
+import template from "./profile.hbs?raw";
+
 export const profile = {
   title: "Профиль",
   avatar: {
@@ -37,17 +43,39 @@ export const profile = {
   modal: {
     uploadAvatar: {
       visible: false,
-      title: "Изменить аватар",
-      buttonTitle: "Загрузить",
-      form: [
-        {
-          name: "avatar",
-          label: "Файл",
-          type: "file",
-        },
-      ],
-      submitTitle: "Загрузить",
-      error: "Нужно выбрать файл",
+      content: {
+        title: "Изменить аватар",
+        buttonTitle: "Загрузить",
+        fields: [
+          {
+            name: "avatar",
+            label: "Файл",
+            type: "file",
+          },
+        ],
+        submitTitle: "Загрузить",
+        error: "Нужно выбрать файл",
+      },
     },
   },
 };
+
+type State = typeof profile;
+
+export class ProfilePage extends View<State> {
+  constructor(state: State) {
+    super(state, {
+      Table: new Table({
+        data: state.data,
+      }),
+      Modal: new Modal(
+        { visible: state.modal.uploadAvatar.visible },
+        new UploadAvatarModalContent(state.modal.uploadAvatar.content),
+      ),
+    });
+  }
+
+  protected render(): string {
+    return template;
+  }
+}

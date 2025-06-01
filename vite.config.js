@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
-import handlebars from "./plugins/handlebars";
 
 const routes = [
   "index",
@@ -22,5 +21,4 @@ export default defineConfig({
       input: routes.map((route) => resolve(__dirname, `src/${route}.html`)),
     },
   },
-  plugins: [handlebars()],
 });

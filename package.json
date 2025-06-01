@@ -6,8 +6,9 @@
   "scripts": {
     "build": "tsc && vite build",
     "start": "npm run build && node ./server.js",
-    "lint": "prettier **/*.{html,hbs,js} --check && stylelint **/*.css",
-    "lint:fix": "prettier **/*.{html,hbs,js} --write && stylelint **/*.css --fix"
+    "dev": "vite",
+    "lint": "prettier **/*.{html,hbs,ts} --check && stylelint **/*.css",
+    "lint:fix": "prettier **/*.{html,hbs,ts} --write && stylelint **/*.css --fix"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
