@@ -1,15 +1,11 @@
 import { View } from "../../lib/view";
-import { Form } from "../form";
+import { Form, type FormState } from "../form";
 import template from "./uploadAvatarModalContent.hbs?raw";
 
 type State = {
   title: string;
   buttonTitle: string;
-  fields: Array<{
-    name: string;
-    label: string;
-    type: string;
-  }>;
+  fields: FormState['fields'];
   submitTitle: string;
   error: string;
 };
@@ -23,6 +19,7 @@ export class UploadAvatarModalContent extends View<State> {
           submitTitle: state.submitTitle,
           context: "",
         },
+        console.log,
         console.log,
       ),
     });

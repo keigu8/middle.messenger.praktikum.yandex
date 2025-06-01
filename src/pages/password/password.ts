@@ -48,9 +48,9 @@ export class PasswordPage extends View<State> {
             },
           }));
         },
-        (fields: State["fields"]) => {
-          if (validate(fields)) {
-            console.log(fields);
+        () => {
+          if (validate(this.state.fields)) {
+            console.log(this.state.fields);
           }
         },
       ),

@@ -46,13 +46,13 @@ export const profile = {
       content: {
         title: "Изменить аватар",
         buttonTitle: "Загрузить",
-        fields: [
-          {
-            name: "avatar",
+        fields: {
+          avatar: {
             label: "Файл",
             type: "file",
-          },
-        ],
+            value: '',
+          }
+        },
         submitTitle: "Загрузить",
         error: "Нужно выбрать файл",
       },

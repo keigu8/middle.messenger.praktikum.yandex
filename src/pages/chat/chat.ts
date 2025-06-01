@@ -123,9 +123,9 @@ export class ChatPage extends View<State> {
             },
           }));
         },
-        (fields: State["fields"]) => {
-          if (validate(fields)) {
-            console.log(fields);
+        () => {
+          if (validate(this.state.fields)) {
+            console.log(this.state.fields);
           }
         },
       ),
@@ -133,7 +133,7 @@ export class ChatPage extends View<State> {
       ChatPreviews: state.chatPreviews.map(
         (chatPreview) => new ChatPreview(chatPreview),
       ),
-      ChatView: new ChatView(state.chatInfo),
+      ChatView: new ChatView({ ...state.chatInfo, regexp: state.fields.search.regexp!, value: '' }),
       OptionsMenu: new OptionsMenu({ optionsMenu: state.optionsMenu }),
     });
   }

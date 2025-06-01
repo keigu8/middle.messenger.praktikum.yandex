@@ -21,10 +21,10 @@ export class Field extends View<State> {
           //@ts-expect-error
           const value = event.target.value;
           onBlur(value);
-          if (this.state.regexp && !this.state.regexp.test(this.state.value)) {
+          if (this.state.regexp && !this.state.regexp.test(value)) {
             this.updateState((state) => ({ ...state, value, isError: true }));
           } else {
-            this.updateState((state) => ({ ...state, value, isError: true }));
+            this.updateState((state) => ({ ...state, value, isError: false }));
           }
         },
       },

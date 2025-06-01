@@ -21,7 +21,7 @@ const form: FormState = {
       label: "Логин",
       type: "text",
       value: "",
-      regexp: new RegExp(/^(?=.*[a-zA-Z])[w-]{3,20}$/),
+      regexp: new RegExp(/^[a-zA-Z0-9-]{3,20}$/),
     },
     email: {
       label: "Почта",
@@ -33,13 +33,13 @@ const form: FormState = {
       label: "Телефон",
       type: "text",
       value: "",
-      regexp: new RegExp(/^\+?d{9,14}$/),
+      regexp: new RegExp(/^\+?[0-9]{9,14}$/),
     },
     password: {
       label: "Пароль",
       type: "password",
       value: "",
-      regexp: new RegExp(/^(?=.*[A-Z])(?=.*d).{8,40}$/),
+      regexp: new RegExp(/^(?=.*[0-9])(?=.*[A-Z])([a-zA-Z0-9]+)$/),
     },
   },
   submitTitle: "Зарегистрироваться",
@@ -76,9 +76,9 @@ export class SignupPage extends View<State> {
             },
           }));
         },
-        (fields: State["fields"]) => {
-          if (validate(fields)) {
-            console.log(fields);
+        () => {
+          if (validate(this.state.fields)) {
+            console.log(this.state.fields);
           }
         },
       ),
