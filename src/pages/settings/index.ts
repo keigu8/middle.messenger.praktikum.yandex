@@ -4,4 +4,4 @@ import "./index.css";
 
 const settingsPage = new SettingsPage(settings);
 
-mountRoot(settingsPage.node);
+mountRoot(settingsPage);

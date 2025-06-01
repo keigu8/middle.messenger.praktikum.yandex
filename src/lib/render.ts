@@ -1,4 +1,4 @@
-export function compile(html: string) {
+export function render(html: string) {
   const template = document.createElement("template");
   template.innerHTML = html;
 

@@ -4,4 +4,4 @@ import "./index.css";
 
 const profilePage = new ProfilePage(profile);
 
-mountRoot(profilePage.node);
+mountRoot(profilePage);

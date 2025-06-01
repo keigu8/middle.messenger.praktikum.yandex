@@ -4,4 +4,8 @@ import "./index.css";
 
 const loginPage = new LoginPage(login);
 
-mountRoot(loginPage.node);
+mountRoot(loginPage);
+
+setTimeout(() => {
+    loginPage.updateState(state => ({...state, title: 'kek'}))
+}, 1000)

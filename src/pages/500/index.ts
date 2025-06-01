@@ -7,4 +7,4 @@ const page500 = new ErrorView({
   link: "Назад к чатам",
 });
 
-mountRoot(page500.node);
+mountRoot(page500);

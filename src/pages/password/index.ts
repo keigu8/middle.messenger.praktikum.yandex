@@ -4,4 +4,4 @@ import "./index.css";
 
 const passwordPage = new PasswordPage(password);
 
-mountRoot(passwordPage.node);
+mountRoot(passwordPage);

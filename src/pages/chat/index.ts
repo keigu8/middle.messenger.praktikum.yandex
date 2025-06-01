@@ -4,4 +4,4 @@ import "./index.css";
 
 const chatPage = new ChatPage(chat);
 
-mountRoot(chatPage.node);
+mountRoot(chatPage);

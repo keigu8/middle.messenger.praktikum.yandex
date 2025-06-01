@@ -7,4 +7,4 @@ const page404 = new ErrorView({
   link: "Назад к чатам",
 });
 
-mountRoot(page404.node);
+mountRoot(page404);

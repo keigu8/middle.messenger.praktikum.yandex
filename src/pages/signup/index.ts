@@ -4,4 +4,4 @@ import "./index.css";
 
 const signupPage = new SignupPage(signup);
 
-mountRoot(signupPage.node);
+mountRoot(signupPage);
