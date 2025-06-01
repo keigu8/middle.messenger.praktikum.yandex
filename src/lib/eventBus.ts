@@ -28,7 +28,6 @@ export default class EventBus {
   }
 
   public emit<T extends any[] = []>(event: string, ...args: T) {
-    console.log(event);
     if (!this._listeners[event]) {
       throw new Error(`No listeners for event ${event}`);
     }

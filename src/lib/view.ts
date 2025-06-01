@@ -4,12 +4,16 @@ import { random } from "./random";
 import { keys } from "./keys";
 import EventBus from "./eventBus";
 
+type Handlers = Partial<{
+  [P in keyof HTMLElementEventMap]?: (event: HTMLElementEventMap[P]) => void;
+}>
+
 export abstract class View<T extends object> {
   static Lifecycle = {
-    Init: 'init',
-    Cdm: 'component-did-mount',
-    Cdu: 'component-did-update',
-    Render: 'render',
+    Init: "init",
+    Cdm: "component-did-mount",
+    Cdu: "component-did-update",
+    Render: "render",
   };
 
   private _id: number;
@@ -18,11 +22,15 @@ export abstract class View<T extends object> {
   private _views: Record<string, View<object>> = {};
   private _template!: HandlebarsTemplateDelegate;
   private _node!: HTMLElement;
+  private _handlerNodeSelector?: string;
+  private _handlers: Handlers;
   private _eventBus = new EventBus();
 
   constructor(
     state: T,
     views?: Record<string, View<object> | Array<View<object>>>,
+    handlers?: Handlers,
+    handlerNodeSelector?: string,
   ) {
     this._id = random();
     this._initLifecycle();
@@ -43,6 +51,9 @@ export abstract class View<T extends object> {
         }
       });
     }
+
+    this._handlers = handlers || {};
+    this._handlerNodeSelector = handlerNodeSelector;
 
     this._eventBus.emit(View.Lifecycle.Init);
   }
@@ -69,20 +80,32 @@ export abstract class View<T extends object> {
         return true;
       },
       deleteProperty() {
-        throw new Error('No access to deleting property from state');
+        throw new Error("No access to deleting property from state");
       },
     });
   }
 
   private _init() {
-    this._template = hbs.compile(this.render() || `<div style="width: 0; height: 0; opacity: 0"></div>`);
+    this._template = hbs.compile(
+      this.render() || `<div style="width: 0; height: 0; opacity: 0"></div>`,
+    );
 
     this._eventBus.emit(View.Lifecycle.Render);
   }
 
-  private _mount(parent: HTMLElement) {
-    parent.appendChild(this._node);
+  private _mount(parent: HTMLElement | null, position: number | null) {
+    let handlerNode = this._node;
+    if (this._handlerNodeSelector) {
+      handlerNode = this._node.querySelector(this._handlerNodeSelector)!;
+    }
+    keys(this._handlers).forEach(handler => {
+      //@ts-ignore
+      handlerNode?.addEventListener(handler, this._handlers[handler]);
+    });
 
+    if (parent && position) {
+      parent.insertBefore(this._node, parent.childNodes[position]);
+    }
     this._eventBus.emit(View.Lifecycle.Cdm);
   }
 
@@ -102,8 +125,9 @@ export abstract class View<T extends object> {
 
   private _render() {
     const parent = this._node && this._node.parentElement;
+    const position = parent && Array.from(parent.childNodes).indexOf(this._node);
 
-    if (parent) {
+    if (this._node) {
       this._unmount(parent);
     }
 
@@ -116,13 +140,22 @@ export abstract class View<T extends object> {
       }
     });
 
-    if (parent) {
-      this._mount(parent);
-    }
+    this._mount(parent, position);
   }
 
-  private _unmount(parent: HTMLElement) {
-    parent.removeChild(this._node);
+  private _unmount(parent: HTMLElement | null) {
+    let handlerNode = this._node;
+    if (this._handlerNodeSelector) {
+      handlerNode = this._node.querySelector(this._handlerNodeSelector)!;
+    }
+    keys(this._handlers).forEach(handler => {
+      //@ts-ignore
+      handlerNode?.removeEventListener(handler, this._handlers[handler]);
+    });
+
+    if (parent) {
+      parent.removeChild(this._node);
+    }
   }
 
   protected get state() {

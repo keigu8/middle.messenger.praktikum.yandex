@@ -17,11 +17,14 @@ type State = {
 export class UploadAvatarModalContent extends View<State> {
   constructor(state: State) {
     super(state, {
-      Form: new Form({
-        fields: state.fields,
-        submitTitle: state.submitTitle,
-        context: "",
-      }),
+      Form: new Form(
+        {
+          fields: state.fields,
+          submitTitle: state.submitTitle,
+          context: "",
+        },
+        console.log,
+      ),
     });
   }
 
