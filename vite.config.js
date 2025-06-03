@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
-import handlebars from "./plugins/handlebars";
 
 const routes = [
   "index",
@@ -15,12 +14,14 @@ const routes = [
 ];
 
 export default defineConfig({
+  // eslint-disable-next-line
   root: resolve(__dirname, "src"),
   build: {
+    // eslint-disable-next-line
     outDir: resolve(__dirname, "dist"),
     rollupOptions: {
+      // eslint-disable-next-line
       input: routes.map((route) => resolve(__dirname, `src/${route}.html`)),
     },
   },
-  plugins: [handlebars()],
 });

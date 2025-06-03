@@ -1,12 +1,4 @@
 <form class="{{context}}__form">
-
-  {{#each form}}
-    {{#if_eq type "file"}}
-      {{> fileUploader}}
-    {{ else }}
-      {{>field}}
-    {{/if_eq}}
-  {{/each}}
-
-  <button type="submit" class="{{context}}__submit">{{submitTitle}}</button>
+  {{{Fields}}}
+  {{{Button}}}
 </form>

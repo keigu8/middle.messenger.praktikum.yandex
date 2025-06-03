@@ -1,30 +1,32 @@
-@import url('/css/uikit.css');
+@import url("../../css/uikit.css");
 
 .password {
-    &__root {
-        @mixin centered;
-        @mixin card;
+  &__root {
+    @mixin centered;
+    @mixin card;
 
-        display: flex;
-        width: 340px;
-        flex-direction: column;
-        align-items: center;
-        padding: 30px;
-    }
+    display: flex;
+    width: 340px;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+  }
 
-    &__title {
-        @mixin typography_title_1;
-        margin: var(--spacing-xxl) 0;
-    }
+  &__title {
+    @mixin typography_title_1;
 
-    &__form {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
+    margin: var(--spacing-xxl) 0;
+  }
 
-    &__submit {
-        @mixin button_mode_primary;
-        margin-top: var(--spacing-xxl);
-    }
+  &__form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  &__submit {
+    @mixin button_mode_primary;
+
+    margin-top: var(--spacing-xxl);
+  }
 }

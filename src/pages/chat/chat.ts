@@ -1,14 +1,30 @@
+import { ChatPreview } from "../../components/chatPreview";
+import { ChatView } from "../../components/chatView";
+import { Form, type FormState } from "../../components/form";
+import { validate } from "../../components/form/validateForm";
+import { OptionsMenu } from "../../components/optionsMenu";
+import { Separator } from "../../components/separator";
+import { View } from "../../lib/view";
+import template from "./chat.hbs?raw";
+
+const form: FormState = {
+  fields: {
+    search: {
+      label: "Поиск",
+      type: "text",
+      value: "",
+      regexp: new RegExp(/^.+$/),
+    },
+  },
+  submitTitle: "",
+  context: "chat",
+};
+
 export const chat = {
   title: "Чат",
   profile: {
     title: "Профиль",
   },
-  search: [
-    {
-      name: "search",
-      label: "Поиск",
-    },
-  ],
   chatPreviews: [
     {
       title: "Андрей",
@@ -84,4 +100,45 @@ export const chat = {
     inputPlaceholder: "Сообщение",
   },
   optionsMenu: ["Добавить пользователя", "Удалить пользователя"],
+  ...form,
 };
+
+type State = typeof chat;
+
+export class ChatPage extends View<State> {
+  constructor(state: State) {
+    super(state, {
+      Form: new Form(
+        {
+          fields: state.fields,
+          submitTitle: state.submitTitle,
+          context: state.context,
+        },
+        (field: string, value: string) => {
+          this.updateState((state) => ({
+            ...state,
+            fields: {
+              ...state.fields,
+              [field]: { ...state.fields[field], value },
+            },
+          }));
+        },
+        () => {
+          if (validate(this.state.fields)) {
+            console.log(this.state.fields);
+          }
+        },
+      ),
+      Separator: new Separator(),
+      ChatPreviews: state.chatPreviews.map(
+        (chatPreview) => new ChatPreview(chatPreview),
+      ),
+      ChatView: new ChatView({ ...state.chatInfo, regexp: state.fields.search.regexp!, value: '' }),
+      OptionsMenu: new OptionsMenu({ optionsMenu: state.optionsMenu }),
+    });
+  }
+
+  protected render(): string {
+    return template;
+  }
+}

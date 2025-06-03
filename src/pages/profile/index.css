@@ -1,88 +1,89 @@
-@import url('/css/uikit.css');
+@import url("../../css/uikit.css");
 
 .profile {
-    &__root {
-        @mixin centered;
-        @mixin card;
+  &__root {
+    @mixin centered;
+    @mixin card;
 
-        display: flex;
-        width: 375px;
-        flex-direction: column;
-        align-items: center;
-        padding: 30px;
+    display: flex;
+    width: 375px;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+  }
+
+  &__title {
+    @mixin typography_title_1;
+
+    margin-bottom: var(--spacing-xxxl);
+  }
+
+  &__avatar {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: var(--spacing-xxxl) 0;
+
+    &::after {
+      @mixin typography_text_accent;
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      border-radius: 50%;
+      background-color: var(--color-bg-dropdown);
+      content: attr(data-text-avatar);
+      cursor: pointer;
+      opacity: 0;
+      text-align: center;
+      transition: opacity 0.5s;
     }
 
-    &__title {
-        @mixin typography_title_1;
-
-        margin-bottom: var(--spacing-xxxl);
-
+    &:hover::after {
+      opacity: 1;
     }
+  }
 
-    &__avatar {
-        position: relative;
-        width: 100px;
-        height: 100px;
-        margin: var(--spacing-xxxl) 0;
+  &__avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
 
-        &::after {
-            @mixin typography_text_accent;
+  &__data {
+    margin: var(--spacing-xxxl) 0;
+  }
 
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            content: attr(data-text-avatar);
-            background-color: var(--color-bg-dropdown);
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
+  &__button {
+    @mixin button_mode_primary;
 
-        &:hover::after {
-            opacity: 1;
-        }
-    }
+    margin-top: var(--spacing-l);
+  }
 
-    &__avatar-image {
-        border-radius: 50%;
-        width: 100%;
-        height: 100%;
+  &__button--destructive {
+    border-color: var(--color-error);
+    color: var(--color-error);
+  }
 
-    }
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
 
-    &__data {
-        margin: var(--spacing-xxxl) 0;
-    }
+  &__submit {
+    @mixin button_mode_primary;
 
-    &__button {
-        @mixin button_mode_primary;
-        margin-top: var(--spacing-l);
-    }
+    margin-top: var(--spacing-s);
+  }
 
-    &__button--destructive {
-        border-color: var(--color-error);
-        color: var(--color-error);
-    }
+  &__error {
+    @mixin typography_footnote;
 
-    &__form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    &__submit {
-        @mixin button_mode_primary;
-        margin-top: var(--spacing-s);
-    }
-
-    &__error {
-        @mixin typography_footnote;
-        color: var(--color-error);
-        margin-top: var(--spacing-l);
-    }
+    margin-top: var(--spacing-l);
+    color: var(--color-error);
+  }
 }

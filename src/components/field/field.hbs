@@ -6,6 +6,10 @@
     class="field__input"
     placeholder="{{label}}"
     required="true"
+    value="{{value}}"
   />
   <label for="{{name}}" class="field__label">{{label}}</label>
+  {{#if isError}}
+    <span class="field__footnote">Неверное значение</span>
+  {{/if}}
 </div>

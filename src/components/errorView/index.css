@@ -1,0 +1,26 @@
+@import url("../../css/uikit.css");
+
+.error {
+  &__root {
+    @mixin centered;
+
+    text-align: center;
+  }
+
+  &__title {
+    @mixin typography_title_1;
+  }
+
+  &__subtitle {
+    @mixin typography_title_2;
+
+    margin-top: var(--spacing-m);
+  }
+
+  &__link {
+    @mixin typography_text_primary;
+
+    display: block;
+    margin-top: var(--spacing-xxxl);
+  }
+}
