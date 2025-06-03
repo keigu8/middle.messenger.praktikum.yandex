@@ -13,6 +13,8 @@ type Options = {
   timeout?: number;
 };
 
+type HTTPTransportMethod<R = unknown> = (url: string, options?: Options) => Promise<R>;
+
 export class HTTPTransport {
   static Method = {
     Get: "GET",
@@ -21,22 +23,22 @@ export class HTTPTransport {
     Delete: "DELETE",
   };
 
-  public get = (url: string, options?: Options) => {
+  public get: HTTPTransportMethod = (url, options) => {
     return this.request(
       options?.data ? `${url}${queryStringify(options.data)}` : url,
       { ...options, method: HTTPTransport.Method.Get },
     );
   };
 
-  public post = (url: string, options?: Options) => {
+  public post: HTTPTransportMethod = (url, options) => {
     return this.request(url, { ...options, method: HTTPTransport.Method.Post });
   };
 
-  public put = (url: string, options?: Options) => {
+  public put: HTTPTransportMethod = (url, options) => {
     return this.request(url, { ...options, method: HTTPTransport.Method.Put });
   };
 
-  public delete = (url: string, options?: Options) => {
+  public delete: HTTPTransportMethod = (url, options) => {
     return this.request(url, {
       ...options,
       method: HTTPTransport.Method.Delete,
