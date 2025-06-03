@@ -12,7 +12,7 @@ const form: FormState = {
       value: "",
       regexp: new RegExp(/^(?:[A-ZА-Я][a-zа-яёЁ-]*)$/),
     },
-    last_name: {
+    second_name: {
       label: "Фамилия",
       type: "text",
       value: "",
