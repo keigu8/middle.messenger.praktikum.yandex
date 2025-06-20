@@ -1,9 +1,14 @@
 <!doctype html>
 <html>
-  {{> head }}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messenger</title>
+    <link rel="stylesheet" href="css/nullify.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
   <body>
-    <main>
-      {{> error title="500" subtitle="Мы уже фиксим" link="Назад к чатам" }}
-    </main>
+    <main id="root"></main>
+    <script src="./pages/500/index.ts" type="module"></script>
   </body>
 </html>

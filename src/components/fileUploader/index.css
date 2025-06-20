@@ -1,14 +1,15 @@
 .fileUploader {
-    &__title {
-        @mixin button_mode_accent;
-        display: inline-block;
-    }
+  &__title {
+    @mixin button_mode_accent;
 
-    input[type=file] {
-        position: absolute;
-        z-index: -1;
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
+    display: inline-block;
+  }
+
+  input[type="file"] {
+    position: absolute;
+    z-index: -1;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
 }
