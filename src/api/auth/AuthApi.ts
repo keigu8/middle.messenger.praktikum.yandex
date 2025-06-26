@@ -1,5 +1,5 @@
-import { HTTPTransport } from "../../lib/http";
-import type { SigninRequest, SignupRequest } from "./types";
+import { HTTPTransport, type SuccessResponse } from "../../lib/http";
+import type { SigninRequest, SignupRequest, SignupResponse } from "./types";
 
 export class AuthApi {
   private readonly url = `${import.meta.env.VITE_API_URL}/auth`;
@@ -10,11 +10,15 @@ export class AuthApi {
   }
 
   public signup(request: SignupRequest) {
-    return this.http.post(`${this.url}/signup`, { data: request });
+    return this.http.post<SignupResponse>(`${this.url}/signup`, {
+      data: request,
+    });
   }
 
   public signin(request: SigninRequest) {
-    return this.http.post(`${this.url}/signin`, { data: request });
+    return this.http.post<SuccessResponse>(`${this.url}/signin`, {
+      data: request,
+    });
   }
 
   public user() {

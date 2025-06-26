@@ -16,10 +16,11 @@ type RequestOptions = Options & {
   method: string;
 };
 
-type HTTPTransportMethod<R = unknown> = (
-  url: string,
-  options?: Options,
-) => Promise<R>;
+type ErrorResponse = {
+  reason: string;
+};
+
+export type SuccessResponse = "OK";
 
 export class HTTPTransport {
   static Method = {
@@ -29,29 +30,35 @@ export class HTTPTransport {
     Delete: "DELETE",
   };
 
-  public get: HTTPTransportMethod = (url, options) => {
-    return this.request(
+  public get<R>(url: string, options?: Options) {
+    return this.request<R>(
       options?.data ? `${url}${queryStringify(options.data)}` : url,
       { ...options, method: HTTPTransport.Method.Get },
     );
-  };
+  }
 
-  public post: HTTPTransportMethod = (url, options) => {
-    return this.request(url, { ...options, method: HTTPTransport.Method.Post });
-  };
+  public post<R>(url: string, options?: Options) {
+    return this.request<R>(url, {
+      ...options,
+      method: HTTPTransport.Method.Post,
+    });
+  }
 
-  public put: HTTPTransportMethod = (url, options) => {
-    return this.request(url, { ...options, method: HTTPTransport.Method.Put });
-  };
+  public put<R>(url: string, options?: Options) {
+    return this.request<R>(url, {
+      ...options,
+      method: HTTPTransport.Method.Put,
+    });
+  }
 
-  public delete: HTTPTransportMethod = (url, options) => {
-    return this.request(url, {
+  public delete<R>(url: string, options?: Options) {
+    return this.request<R>(url, {
       ...options,
       method: HTTPTransport.Method.Delete,
     });
-  };
+  }
 
-  private request = (url: string, options: RequestOptions) => {
+  private request = <R>(url: string, options: RequestOptions): Promise<R> => {
     const { headers = {}, method, data = null, timeout = 5000 } = options;
 
     return new Promise(function (resolve, reject) {
@@ -65,13 +72,22 @@ export class HTTPTransport {
 
       xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-      xhr.onload = function () {
-        resolve(xhr);
+      xhr.onload = (event) => {
+        // @ts-expect-error
+        const response = event.target?.response;
+        try {
+          resolve(JSON.parse(response) as R);
+        } catch (_) {
+          resolve(response as R);
+        }
       };
 
       xhr.onabort = reject;
 
-      xhr.onerror = reject;
+      xhr.onerror = (event) => {
+        // @ts-expect-error
+        reject(JSON.parse(event.target?.response) as ErrorResponse);
+      };
 
       xhr.timeout = timeout;
 

@@ -1,6 +1,7 @@
-import { Form, type FormState } from "../../components/form";
+import { Form, mapFields, type FormState } from "../../components/form";
 import { validate } from "../../components/form/validateForm";
 import { View } from "../../lib/view";
+import type { AuthService } from "../../services/auth";
 import template from "./login.hbs?raw";
 
 type LoginForm = {
@@ -40,7 +41,7 @@ type State = {
 } & FormState<LoginForm>;
 
 export class LoginPage extends View<State> {
-  constructor(state: State) {
+  constructor(state: State, authService: AuthService) {
     super(state, {
       Form: new Form(
         {
@@ -59,7 +60,7 @@ export class LoginPage extends View<State> {
         },
         () => {
           if (validate(this.state.fields)) {
-            console.log(this.state.fields);
+            authService.login(mapFields(this.state.fields));
           }
         },
       ),

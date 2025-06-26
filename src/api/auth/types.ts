@@ -7,6 +7,10 @@ export type SignupRequest = {
   phone: string;
 };
 
+export type SignupResponse = {
+  id: number;
+};
+
 export type SigninRequest = {
   login: string;
   password: string;

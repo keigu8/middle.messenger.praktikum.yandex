@@ -1,4 +1,4 @@
-import { Router } from "./lib/router";
+import { router } from "./globals";
 import page404 from "./pages/404";
 import page500 from "./pages/500";
 import chatPage from "./pages/chat";
@@ -7,8 +7,6 @@ import passwordPage from "./pages/password";
 import profilePage from "./pages/profile";
 import settingsPage from "./pages/settings";
 import signupPage from "./pages/signup";
-
-const router = new Router();
 
 router
   .use("/", loginPage)
