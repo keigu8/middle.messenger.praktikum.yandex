@@ -19,7 +19,11 @@ export class Router {
   }
 
   private _onRoute(pathname: string) {
-    const route = this._getRoute(pathname);
+    let route = this._getRoute(pathname);
+
+    if (!route?.condition) {
+      route = this._getRoute("/");
+    }
 
     if (!route) {
       return;
@@ -33,8 +37,8 @@ export class Router {
     route.navigate();
   }
 
-  public use(pathname: string, view: View<object>) {
-    const route = new Route(pathname, view);
+  public use(pathname: string, view: View<object>, condition?: boolean) {
+    const route = new Route(pathname, view, condition);
 
     this._routes.push(route);
 

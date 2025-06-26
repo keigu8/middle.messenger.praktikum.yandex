@@ -75,8 +75,15 @@ export class HTTPTransport {
       xhr.onload = (event) => {
         // @ts-expect-error
         const response = event.target?.response;
+        // @ts-expect-error
+        const status = event.target?.status;
         try {
-          resolve(JSON.parse(response) as R);
+          const json = JSON.parse(response);
+          if (status !== 200) {
+            reject(json as ErrorResponse);
+          } else {
+            resolve(json as R);
+          }
         } catch (_) {
           resolve(response as R);
         }
@@ -84,10 +91,7 @@ export class HTTPTransport {
 
       xhr.onabort = reject;
 
-      xhr.onerror = (event) => {
-        // @ts-expect-error
-        reject(JSON.parse(event.target?.response) as ErrorResponse);
-      };
+      xhr.onerror = reject;
 
       xhr.timeout = timeout;
 

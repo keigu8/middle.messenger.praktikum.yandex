@@ -3,10 +3,12 @@ import type { View } from "../view";
 export class Route {
   private _pathname: string;
   private readonly _view: View<object>;
+  private readonly _condition?: boolean;
 
-  constructor(pathname: string, view: View<object>) {
+  constructor(pathname: string, view: View<object>, condition?: boolean) {
     this._pathname = pathname;
     this._view = view;
+    this._condition = condition;
   }
 
   private get root() {
@@ -17,6 +19,10 @@ export class Route {
     }
 
     return root;
+  }
+
+  public get condition() {
+    return this._condition;
   }
 
   public match(pathname: string) {

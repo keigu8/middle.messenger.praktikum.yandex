@@ -1,5 +1,10 @@
 import { HTTPTransport, type SuccessResponse } from "../../lib/http";
-import type { SigninRequest, SignupRequest, SignupResponse } from "./types";
+import type {
+  SigninRequest,
+  SignupRequest,
+  SignupResponse,
+  UserResponse,
+} from "./types";
 
 export class AuthApi {
   private readonly url = `${import.meta.env.VITE_API_URL}/auth`;
@@ -22,7 +27,7 @@ export class AuthApi {
   }
 
   public user() {
-    return this.http.get(`${this.url}/user`);
+    return this.http.get<UserResponse>(`${this.url}/user`);
   }
 
   public logout() {
