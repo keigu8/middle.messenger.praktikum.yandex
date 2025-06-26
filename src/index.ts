@@ -11,12 +11,12 @@ import signupPage from "./pages/signup";
 const router = new Router();
 
 router
-    .use('/', loginPage)
-    .use('/sign-up', signupPage)
-    .use('/settings', settingsPage)
-    .use('/messenger', chatPage)
-    .use('/password', passwordPage)
-    .use('/profile', profilePage)
-    .use('/404', page404)
-    .use('/500', page500)
-    .start();
+  .use("/", loginPage)
+  .use("/sign-up", signupPage)
+  .use("/settings", settingsPage)
+  .use("/messenger", chatPage)
+  .use("/password", passwordPage)
+  .use("/profile", profilePage)
+  .use("/404", page404)
+  .use("/500", page500)
+  .start();

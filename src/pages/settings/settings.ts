@@ -3,7 +3,17 @@ import { validate } from "../../components/form/validateForm";
 import { View } from "../../lib/view";
 import template from "./settings.hbs?raw";
 
-const form: FormState = {
+type SettingsForm = {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  phone: string;
+  display_name: string;
+  password: string;
+};
+
+const form: FormState<SettingsForm> = {
   context: "settings",
   fields: {
     first_name: {
@@ -72,7 +82,7 @@ export class SettingsPage extends View<State> {
             ...state,
             fields: {
               ...state.fields,
-              [field]: { ...state.fields[field], value },
+              [field]: { ...state.fields[field as keyof SettingsForm], value },
             },
           }));
         },

@@ -8,12 +8,18 @@ function queryStringify(data: object) {
 
 type Options = {
   headers?: Record<string, string>;
-  method: string;
   data?: object;
   timeout?: number;
 };
 
-type HTTPTransportMethod<R = unknown> = (url: string, options?: Options) => Promise<R>;
+type RequestOptions = Options & {
+  method: string;
+};
+
+type HTTPTransportMethod<R = unknown> = (
+  url: string,
+  options?: Options,
+) => Promise<R>;
 
 export class HTTPTransport {
   static Method = {
@@ -45,7 +51,7 @@ export class HTTPTransport {
     });
   };
 
-  private request = (url: string, options: Options) => {
+  private request = (url: string, options: RequestOptions) => {
     const { headers = {}, method, data = null, timeout = 5000 } = options;
 
     return new Promise(function (resolve, reject) {
@@ -56,6 +62,8 @@ export class HTTPTransport {
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
+
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
       xhr.onload = function () {
         resolve(xhr);
@@ -74,12 +82,7 @@ export class HTTPTransport {
         return;
       }
 
-      const formData = new FormData();
-
-      keys(data).forEach((key) => {
-        formData.append(key, data[key]);
-      });
-      xhr.send(formData);
+      xhr.send(JSON.stringify(data));
     });
   };
 }

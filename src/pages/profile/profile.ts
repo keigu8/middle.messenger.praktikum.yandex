@@ -50,8 +50,8 @@ export const profile = {
           avatar: {
             label: "Файл",
             type: "file",
-            value: '',
-          }
+            value: "",
+          },
         },
         submitTitle: "Загрузить",
         error: "Нужно выбрать файл",

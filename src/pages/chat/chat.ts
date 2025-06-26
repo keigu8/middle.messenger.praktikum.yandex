@@ -7,7 +7,11 @@ import { Separator } from "../../components/separator";
 import { View } from "../../lib/view";
 import template from "./chat.hbs?raw";
 
-const form: FormState = {
+type SearchForm = {
+  search: string;
+};
+
+const form: FormState<SearchForm> = {
   fields: {
     search: {
       label: "Поиск",
@@ -119,7 +123,7 @@ export class ChatPage extends View<State> {
             ...state,
             fields: {
               ...state.fields,
-              [field]: { ...state.fields[field], value },
+              [field]: { ...state.fields[field as keyof SearchForm], value },
             },
           }));
         },
@@ -133,7 +137,11 @@ export class ChatPage extends View<State> {
       ChatPreviews: state.chatPreviews.map(
         (chatPreview) => new ChatPreview(chatPreview),
       ),
-      ChatView: new ChatView({ ...state.chatInfo, regexp: state.fields.search.regexp!, value: '' }),
+      ChatView: new ChatView({
+        ...state.chatInfo,
+        regexp: state.fields.search.regexp!,
+        value: "",
+      }),
       OptionsMenu: new OptionsMenu({ optionsMenu: state.optionsMenu }),
     });
   }

@@ -3,7 +3,12 @@ import { validate } from "../../components/form/validateForm";
 import { View } from "../../lib/view";
 import template from "./password.hbs?raw";
 
-const form: FormState = {
+type PasswordForm = {
+  old_password: string;
+  new_password: string;
+};
+
+const form: FormState<PasswordForm> = {
   fields: {
     old_password: {
       label: "Старый пароль",
@@ -44,7 +49,7 @@ export class PasswordPage extends View<State> {
             ...state,
             fields: {
               ...state.fields,
-              [field]: { ...state.fields[field], value },
+              [field]: { ...state.fields[field as keyof PasswordForm], value },
             },
           }));
         },
