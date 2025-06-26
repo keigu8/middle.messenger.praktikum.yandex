@@ -26,6 +26,6 @@ export class AuthApi {
   }
 
   public logout() {
-    return this.http.post(`${this.url}/logout`);
+    return this.http.post<SuccessResponse>(`${this.url}/logout`);
   }
 }

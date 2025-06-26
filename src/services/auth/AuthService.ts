@@ -6,11 +6,10 @@ import {
 import type { Router } from "../../lib/router";
 
 export class AuthService {
-  private readonly authApi: AuthApi;
-
-  constructor(private readonly router: Router) {
-    this.authApi = new AuthApi();
-  }
+  constructor(
+    private readonly authApi: AuthApi,
+    private readonly router: Router,
+  ) {}
 
   public async signup(data: SignupRequest) {
     await this.authApi.signup(data).then(() => {
@@ -21,6 +20,12 @@ export class AuthService {
   public async login(data: SigninRequest) {
     await this.authApi.signin(data).then(() => {
       this.router.go("/messenger");
+    });
+  }
+
+  public async logout() {
+    await this.authApi.logout().then(() => {
+      this.router.go("/");
     });
   }
 }

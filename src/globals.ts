@@ -6,4 +6,4 @@ export const router = new Router();
 
 export const authApi = new AuthApi();
 
-export const authService = new AuthService(router);
+export const authService = new AuthService(authApi, router);
