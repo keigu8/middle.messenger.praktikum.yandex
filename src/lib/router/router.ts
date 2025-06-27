@@ -2,64 +2,68 @@ import type { View } from "../view";
 import { Route } from "./route";
 
 export class Router {
-    private readonly _routes: Route[];
-    private _currentRoute: Route | null;
+  private readonly _routes: Route[];
+  private _currentRoute: Route | null;
 
-    constructor() {
-        this._routes = [];
-        this._currentRoute = null;
+  constructor() {
+    this._routes = [];
+    this._currentRoute = null;
+  }
+
+  private get history() {
+    return window.history;
+  }
+
+  private _getRoute(pathname: string) {
+    return this._routes.find((route) => route.match(pathname));
+  }
+
+  private _onRoute(pathname: string) {
+    let route = this._getRoute(pathname);
+
+    if (!route?.condition) {
+      route = this._getRoute("/");
     }
 
-    private get history() {
-        return window.history;
+    if (!route) {
+      return;
     }
 
-    private _getRoute(pathname: string) {
-        return this._routes.find(route => route.match(pathname));
+    if (this._currentRoute && this._currentRoute !== route) {
+      this._currentRoute.leave();
     }
 
-    private _onRoute(pathname: string) {
-        const route = this._getRoute(pathname);
-        
-        if (!route) {
-            return;
-        }
+    this._currentRoute = route;
+    route.navigate();
+  }
 
-        if (this._currentRoute && this._currentRoute !== route) {
-            this._currentRoute.leave();
-        }
+  public use(pathname: string, view: View<object>, condition?: boolean) {
+    const route = new Route(pathname, view, condition);
 
-        this._currentRoute = route;
-        route.navigate();
-    }
+    this._routes.push(route);
 
-    public use(pathname: string, view: View<object>) {
-        const route = new Route(pathname, view);
+    return this;
+  }
 
-        this._routes.push(route);
+  public start() {
+    window.onpopstate = ((event: PopStateEvent) => {
+      //@ts-expect-error
+      this._onRoute(event.currentTarget?.location.pathname);
+    }).bind(this);
 
-        return this;
-    }
+    this._onRoute(window.location.pathname);
+  }
 
-    public start() {
-        window.onpopstate = ((event: PopStateEvent) => {
-            //@ts-expect-error
-            this._onRoute(event.currentTarget?.location.pathname);
-        }).bind(this);
+  public go(pathname: string) {
+    this.history.pushState({}, "", pathname);
+    this._onRoute(pathname);
+  }
 
-        this._onRoute(window.location.pathname);
-    }
+  public back() {
+    this.history.back();
+  }
 
-    public go(pathname: string) {
-        this.history.pushState({}, '', pathname);
-        this._onRoute(pathname);
-    }
-
-    public back() {
-        this.history.back();
-    }
-
-    public forward() {
-        this.history.forward();
-    }
+  public forward() {
+    this.history.forward();
+  }
 }

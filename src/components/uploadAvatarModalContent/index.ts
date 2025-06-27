@@ -2,10 +2,14 @@ import { View } from "../../lib/view";
 import { Form, type FormState } from "../form";
 import template from "./uploadAvatarModalContent.hbs?raw";
 
+type UploadAvatarForm = {
+  avatar: string;
+};
+
 type State = {
   title: string;
   buttonTitle: string;
-  fields: FormState['fields'];
+  fields: FormState<UploadAvatarForm>["fields"];
   submitTitle: string;
   error: string;
 };
