@@ -13,4 +13,3 @@ export const authService = new AuthService(authApi, router);
 await authService.init();
 
 export const userService = new UserService(userApi, authService);
-await userService.init();

@@ -6,7 +6,7 @@ type UploadAvatarForm = {
   avatar: string;
 };
 
-type State = {
+export type UploadAvatarModalState = {
   title: string;
   buttonTitle: string;
   fields: FormState<UploadAvatarForm>["fields"];
@@ -14,8 +14,8 @@ type State = {
   error: string;
 };
 
-export class UploadAvatarModalContent extends View<State> {
-  constructor(state: State) {
+export class UploadAvatarModalContent extends View<UploadAvatarModalState> {
+  constructor(state: UploadAvatarModalState) {
     super(state, {
       Form: new Form(
         {

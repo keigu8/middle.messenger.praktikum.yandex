@@ -11,10 +11,10 @@ import signupPage from "./pages/signup";
 router
   .use("/", loginPage)
   .use("/sign-up", signupPage)
-  .use("/settings", settingsPage, authService.isAuthorized)
-  .use("/messenger", chatPage, authService.isAuthorized)
-  .use("/password", passwordPage, authService.isAuthorized)
-  .use("/profile", profilePage, authService.isAuthorized)
+  .use("/settings", settingsPage, () => authService.isAuthorized)
+  .use("/messenger", chatPage, () => authService.isAuthorized)
+  .use("/password", passwordPage, () => authService.isAuthorized)
+  .use("/profile", profilePage, () => authService.isAuthorized)
   .use("/404", page404)
   .use("/500", page500)
   .start();

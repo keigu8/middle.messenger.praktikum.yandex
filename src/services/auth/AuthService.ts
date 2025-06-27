@@ -22,7 +22,15 @@ export class AuthService {
     return this._user;
   }
 
+  public setUser(value: UserResponse) {
+    this._user = value;
+  }
+
   public async init() {
+    await this.refreshUser();
+  }
+
+  private async refreshUser() {
     await this.authApi
       .user()
       .then((user) => {
@@ -40,9 +48,10 @@ export class AuthService {
   }
 
   public login(data: SigninRequest) {
-    this.authApi.signin(data).then(() => {
-      this.router.go("/messenger");
-    });
+    this.authApi
+      .signin(data)
+      .then(() => this.refreshUser())
+      .then(() => this.router.go("/messenger"));
   }
 
   public logout() {

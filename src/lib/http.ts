@@ -97,6 +97,8 @@ export class HTTPTransport {
 
       xhr.ontimeout = reject;
 
+      xhr.withCredentials = true;
+
       if (!data) {
         xhr.send();
         return;
