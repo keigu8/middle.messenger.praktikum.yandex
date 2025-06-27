@@ -19,9 +19,10 @@ export class UserService {
     });
   }
 
-  public editAvatar(data: EditAvatarRequest) {
+  public editAvatar(data: EditAvatarRequest, onSuccess: VoidFunction) {
     this.userApi.editAvatar(data).then((user) => {
       this.authService.setUser(user);
+      onSuccess();
     });
   }
 

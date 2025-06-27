@@ -8,7 +8,7 @@ export type EditProfileRequest = {
 };
 
 export type EditAvatarRequest = {
-  file: File;
+  avatar: File;
 };
 
 export type EditPasswordRequest = {

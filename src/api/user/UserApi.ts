@@ -22,6 +22,7 @@ export class UserApi extends Api {
   public editAvatar(request: EditAvatarRequest) {
     return this.http.put<ProfileResponse>(this.path("profile/avatar"), {
       data: request,
+      format: "formdata",
     });
   }
 

@@ -10,6 +10,7 @@ type Options = {
   headers?: Record<string, string>;
   data?: object;
   timeout?: number;
+  format?: "json" | "formdata";
 };
 
 type RequestOptions = Options & {
@@ -59,7 +60,13 @@ export class HTTPTransport {
   }
 
   private request = <R>(url: string, options: RequestOptions): Promise<R> => {
-    const { headers = {}, method, data = null, timeout = 5000 } = options;
+    const {
+      headers = {},
+      method,
+      data = null,
+      timeout = 5000,
+      format = "json",
+    } = options;
 
     return new Promise(function (resolve, reject) {
       const xhr = new XMLHttpRequest();
@@ -69,8 +76,6 @@ export class HTTPTransport {
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
-
-      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
       xhr.onload = (event) => {
         // @ts-expect-error
@@ -104,7 +109,16 @@ export class HTTPTransport {
         return;
       }
 
-      xhr.send(JSON.stringify(data));
+      if (format === "json") {
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.send(JSON.stringify(data));
+      } else if (format === "formdata") {
+        const formData = new FormData();
+        keys(data).forEach((key) => {
+          formData.append(key, data[key]);
+        });
+        xhr.send(formData);
+      }
     });
   };
 }

@@ -1,13 +1,7 @@
 <div>
   <div class="profile__root">
     <h1 class="profile__title">{{title}}</h1>
-    <div class="profile__avatar" data-text-avatar="{{avatar.text}}">
-      <img
-        src="{{avatar.src}}"
-        alt="{{avatar.alt}}"
-        class="profile__avatar-image"
-      />
-    </div>
+    {{{ProfileAvatar}}}
     {{{Table}}}
     <a
       href="settings.html"

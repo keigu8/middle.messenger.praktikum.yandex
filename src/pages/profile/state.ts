@@ -1,4 +1,5 @@
 import type { ProfileResponse } from "../../api/user";
+import { valueOrEmptyString } from "../../lib/utils";
 import type { ProfilePageState } from "./profile";
 
 export const getProfileState = (
@@ -6,34 +7,37 @@ export const getProfileState = (
 ): ProfilePageState => ({
   title: "Профиль",
   avatar: {
-    src: profile?.avatar || "",
+    src:
+      `https://ya-praktikum.tech/api/v2/resources${profile?.avatar}` ||
+      "/assets/avatar.png",
     alt: "Аватар профиля",
     text: "Загрузить аватар",
+    context: "profile",
   },
   data: [
     {
       label: "Почта",
-      value: profile?.email || "",
+      value: valueOrEmptyString(profile?.email),
     },
     {
       label: "Логин",
-      value: profile?.login || "",
+      value: valueOrEmptyString(profile?.login),
     },
     {
       label: "Имя",
-      value: profile?.first_name || "",
+      value: valueOrEmptyString(profile?.first_name),
     },
     {
       label: "Фамилия",
-      value: profile?.second_name || "",
+      value: valueOrEmptyString(profile?.second_name),
     },
     {
       label: "Имя в чате",
-      value: profile?.display_name || "",
+      value: valueOrEmptyString(profile?.display_name),
     },
     {
       label: "Телефон",
-      value: profile?.phone || "",
+      value: valueOrEmptyString(profile?.phone),
     },
   ],
   editProfileButtonTitle: "Редактировать",
