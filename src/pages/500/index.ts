@@ -1,5 +1,4 @@
 import { ErrorView } from "../../components/errorView";
-import { mountRoot } from "../../lib/mountRoot";
 
 const page500 = new ErrorView({
   title: "500",
@@ -7,4 +6,4 @@ const page500 = new ErrorView({
   link: "Назад к чатам",
 });
 
-mountRoot(page500);
+export default page500;

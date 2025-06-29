@@ -1,5 +1,9 @@
-<div class="modal__root">
-  <div class="modal__card">
-    <p class="modal__content">{{{Content}}}</p>
-  </div>
+<div>
+  {{#if visible}}
+    <div class="modal__root">
+      <div class="modal__card">
+        <p class="modal__content">{{{Content}}}</p>
+      </div>
+    </div>
+  {{/if}}
 </div>

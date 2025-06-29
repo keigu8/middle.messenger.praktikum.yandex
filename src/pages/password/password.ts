@@ -1,36 +1,20 @@
-import { Form, type FormState } from "../../components/form";
+import { Form, mapFields, type FormState } from "../../components/form";
 import { validate } from "../../components/form/validateForm";
 import { View } from "../../lib/view";
+import type { UserService } from "../../services/user";
 import template from "./password.hbs?raw";
 
-const form: FormState = {
-  fields: {
-    old_password: {
-      label: "Старый пароль",
-      type: "password",
-      value: "",
-      regexp: new RegExp(/^(?=.*[A-Z])(?=.*d).{8,40}$/),
-    },
-    new_password: {
-      label: "Новый пароль",
-      type: "password",
-      value: "",
-      regexp: new RegExp(/^(?=.*[A-Z])(?=.*d).{8,40}$/),
-    },
-  },
-  submitTitle: "Сохранить",
-  context: "password",
+type PasswordForm = {
+  oldPassword: string;
+  newPassword: string;
 };
 
-export const password = {
-  title: "Смена пароля",
-  ...form,
-};
+export type PasswordPageState = {
+  title: string;
+} & FormState<PasswordForm>;
 
-type State = typeof password;
-
-export class PasswordPage extends View<State> {
-  constructor(state: State) {
+export class PasswordPage extends View<PasswordPageState> {
+  constructor(state: PasswordPageState, userService: UserService) {
     super(state, {
       Form: new Form(
         {
@@ -44,13 +28,13 @@ export class PasswordPage extends View<State> {
             ...state,
             fields: {
               ...state.fields,
-              [field]: { ...state.fields[field], value },
+              [field]: { ...state.fields[field as keyof PasswordForm], value },
             },
           }));
         },
         () => {
           if (validate(this.state.fields)) {
-            console.log(this.state.fields);
+            userService.editPassword(mapFields(this.state.fields));
           }
         },
       ),
