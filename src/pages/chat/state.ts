@@ -48,4 +48,12 @@ export const getChatPageState = (chats: GetChatsResponse): ChatPageState => ({
   submitTitle: "",
   context: "chat",
   showCreateChatButton: false,
+  modals: {
+    addUsersToChat: {
+      visible: false,
+    },
+    deleteUsersFromChat: {
+      visible: false,
+    },
+  },
 });

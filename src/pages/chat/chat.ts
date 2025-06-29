@@ -1,8 +1,10 @@
+import { AddUsersToChatModalContent } from "../../components/addUsersToChatModalContent";
 import { Button } from "../../components/button";
 import { ChatPreview } from "../../components/chatPreview";
 import { ChatView } from "../../components/chatView";
 import { Form, mapFields, type FormState } from "../../components/form";
 import { validate } from "../../components/form/validateForm";
+import { Modal, type ModalState } from "../../components/modal";
 import { OptionsMenu } from "../../components/optionsMenu";
 import { Separator } from "../../components/separator";
 import { chatService } from "../../globals";
@@ -40,10 +42,30 @@ export type ChatPageState = {
   };
   optionsMenu: string[];
   showCreateChatButton: boolean;
+  modals: {
+    addUsersToChat: ModalState;
+    deleteUsersFromChat: ModalState;
+  };
 } & FormState<SearchForm>;
 
 export class ChatPage extends View<ChatPageState> {
   constructor(state: ChatPageState) {
+    const addUsersToChatModal = new Modal(
+      {
+        visible: state.modals.addUsersToChat.visible,
+      },
+      new AddUsersToChatModalContent(
+        {
+          users: [],
+        },
+        chatService,
+      ),
+    );
+
+    const deleteUsersFromChat = new Modal({
+      visible: state.modals.deleteUsersFromChat.visible,
+    });
+
     super(state, {
       Form: new Form(
         {
@@ -97,7 +119,18 @@ export class ChatPage extends View<ChatPageState> {
         regexp: state.fields.search.regexp!,
         value: "",
       }),
-      OptionsMenu: new OptionsMenu({ optionsMenu: state.optionsMenu }),
+      AddUsersToChatModal: addUsersToChatModal,
+      DeleteUsersFromChatModal: deleteUsersFromChat,
+      OptionsMenu: new OptionsMenu(
+        {
+          optionsMenu: state.optionsMenu,
+        },
+        (index: number) => {
+          console.log(index);
+          //   chatService.deleteUsersFromChat;
+          // }
+        },
+      ),
     });
   }
 

@@ -10,6 +10,7 @@ import type { AuthService } from "../auth";
 export class ChatService {
   private _search: string = "";
   private _chats: GetChatsResponse = [];
+  private _selectedChatId: number | null = null;
 
   constructor(
     private readonly chatApi: ChatApi,
@@ -59,8 +60,14 @@ export class ChatService {
     });
   }
 
-  public addUsersToChat(data: AddUsersToChatRequest) {
-    return this.chatApi.addUsersToChat(data);
+  public addUserToChat(userId: number) {
+    if (!this._selectedChatId) {
+      return;
+    }
+    return this.chatApi.addUsersToChat({
+      chatId: this._selectedChatId,
+      users: [userId],
+    });
   }
 
   public deleteUsersFromChat(data: DeleteUsersFromChatRequest) {

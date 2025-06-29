@@ -10,7 +10,7 @@ export type CreateChatRequest = {
 
 export type AddUsersToChatRequest = {
   users: number[];
-  chatId: number[];
+  chatId: number;
 };
 
 export type DeleteUsersFromChatRequest = {
