@@ -35,9 +35,11 @@ export class AuthService {
       .user()
       .then((user) => {
         this._user = user;
+        this.router.go("/messenger");
       })
       .catch(() => {
         this._user = null;
+        this.router.go("/");
       });
   }
 
@@ -48,10 +50,7 @@ export class AuthService {
   }
 
   public login(data: SigninRequest) {
-    this.authApi
-      .signin(data)
-      .then(() => this.refreshUser())
-      .then(() => this.router.go("/messenger"));
+    this.authApi.signin(data).then(() => this.refreshUser());
   }
 
   public logout() {

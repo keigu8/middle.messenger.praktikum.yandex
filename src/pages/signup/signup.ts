@@ -1,9 +1,11 @@
+import { Button } from "../../components/button";
 import {
   type FormState,
   Form,
   validate,
   mapFields,
 } from "../../components/form";
+import { router } from "../../globals";
 import { View } from "../../lib/view";
 import type { AuthService } from "../../services/auth";
 import template from "./signup.hbs?raw";
@@ -95,6 +97,14 @@ export class SignupPage extends View<State> {
             await authService.signup(mapFields(this.state.fields));
           }
         },
+      ),
+      Button: new Button(
+        {
+          type: "button",
+          title: state.linkTitle,
+          className: "signup__link",
+        },
+        () => router.go("/"),
       ),
     });
   }

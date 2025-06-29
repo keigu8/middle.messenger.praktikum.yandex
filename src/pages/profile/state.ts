@@ -7,9 +7,9 @@ export const getProfileState = (
 ): ProfilePageState => ({
   title: "Профиль",
   avatar: {
-    src:
-      `https://ya-praktikum.tech/api/v2/resources${profile?.avatar}` ||
-      "/assets/avatar.png",
+    src: profile?.avatar
+      ? `https://ya-praktikum.tech/api/v2/resources${profile?.avatar}`
+      : "/assets/avatar.png",
     alt: "Аватар профиля",
     text: "Загрузить аватар",
     context: "profile",

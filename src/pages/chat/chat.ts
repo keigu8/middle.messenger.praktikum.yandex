@@ -9,7 +9,7 @@ import { Modal, type ModalState } from "../../components/modal";
 import { OptionsMenu } from "../../components/optionsMenu";
 import { Separator } from "../../components/separator";
 import { UserItem } from "../../components/userItem";
-import { authService, chatService, userService } from "../../globals";
+import { authService, chatService, router, userService } from "../../globals";
 import { View } from "../../lib/view";
 import template from "./chat.hbs?raw";
 
@@ -218,6 +218,14 @@ export class ChatPage extends View<ChatPageState> {
       AddUsersToChatModal: addUsersToChatModal,
       DeleteUsersFromChatModal: deleteUsersFromChatModal,
       OptionsMenu: optionsMenu,
+      ProfileButton: new Button(
+        {
+          type: "button",
+          title: state.profile.title,
+          className: "chat__link",
+        },
+        () => router.go("/profile"),
+      ),
     });
   }
 
