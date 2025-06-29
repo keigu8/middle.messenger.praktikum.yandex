@@ -15,7 +15,7 @@ export type AddUsersToChatRequest = {
 
 export type DeleteUsersFromChatRequest = {
   users: number[];
-  chatId: number[];
+  chatId: number;
 };
 
 export type GetChatsResponse = Array<{

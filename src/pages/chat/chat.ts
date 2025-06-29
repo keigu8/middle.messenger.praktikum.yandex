@@ -2,6 +2,7 @@ import { AddUsersToChatModalContent } from "../../components/addUsersToChatModal
 import { Button } from "../../components/button";
 import { ChatPreview } from "../../components/chatPreview";
 import { ChatView } from "../../components/chatView";
+import { DeleteUsersFromChatModalContent } from "../../components/deleteUsersFromChatModalContent";
 import { Form, mapFields, type FormState } from "../../components/form";
 import { validate } from "../../components/form/validateForm";
 import { Modal, type ModalState } from "../../components/modal";
@@ -62,9 +63,12 @@ export class ChatPage extends View<ChatPageState> {
       ),
     );
 
-    const deleteUsersFromChat = new Modal({
-      visible: state.modals.deleteUsersFromChat.visible,
-    });
+    const deleteUsersFromChat = new Modal(
+      {
+        visible: state.modals.deleteUsersFromChat.visible,
+      },
+      new DeleteUsersFromChatModalContent({ users: [] }, chatService),
+    );
 
     super(state, {
       Form: new Form(

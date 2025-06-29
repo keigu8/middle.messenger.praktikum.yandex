@@ -1,8 +1,6 @@
 import type {
-  AddUsersToChatRequest,
   ChatApi,
   CreateChatRequest,
-  DeleteUsersFromChatRequest,
   GetChatsResponse,
 } from "../../api/chat";
 import type { AuthService } from "../auth";
@@ -70,7 +68,13 @@ export class ChatService {
     });
   }
 
-  public deleteUsersFromChat(data: DeleteUsersFromChatRequest) {
-    return this.chatApi.deleteUsersFromChat(data);
+  public deleteUsersFromChat(userId: number) {
+    if (!this._selectedChatId) {
+      return;
+    }
+    return this.chatApi.deleteUsersFromChat({
+      chatId: this._selectedChatId,
+      users: [userId],
+    });
   }
 }
