@@ -4,9 +4,12 @@ import type {
   GetChatsResponse,
   GetChatUsersResponse,
 } from "../../api/chat";
+import { WebSocketClient } from "../../lib/ws";
 import type { AuthService } from "../auth";
+import type { Message } from "./types";
 
 export class ChatService {
+  private _ws: WebSocketClient | null = null;
   private _search: string = "";
   private _chats: GetChatsResponse = [];
   private _selectedChatId: number | null = null;
@@ -17,12 +20,19 @@ export class ChatService {
     private readonly authService: AuthService,
   ) {}
 
+  private get ws() {
+    if (!this._ws) {
+      throw Error("Web socket is not initialized");
+    }
+    return this._ws;
+  }
+
   public get chats() {
     return this._chats;
   }
 
-  public init() {
-    return this.refreshChats();
+  public async init() {
+    await this.refreshChats();
   }
 
   private async refreshChats() {
@@ -48,9 +58,18 @@ export class ChatService {
     return this._selectedChatUsers;
   }
 
-  public async selectChat(chatId: number) {
+  public async selectChat(
+    chatId: number,
+    callback: (message: Message) => void,
+  ) {
     this._selectedChatId = chatId;
     this._selectedChatUsers = await this.chatApi.getChatUsers({ chatId });
+    const { token } = await this.chatApi.getToken({ chatId });
+    this._ws = new WebSocketClient(
+      `${this.authService.user!.id}/${chatId}/${token}`,
+    );
+    this._ws.subscribe(callback);
+    return this._chats.find((chat) => chat.id === chatId);
   }
 
   public createChat(data: CreateChatRequest) {
@@ -87,5 +106,9 @@ export class ChatService {
       chatId: this._selectedChatId,
       users: [userId],
     });
+  }
+
+  public send(message: string) {
+    this.ws.send(message);
   }
 }

@@ -9,6 +9,8 @@ import type {
   GetChatsResponse,
   GetChatUsersRequest,
   GetChatUsersResponse,
+  GetTokenRequest,
+  GetTokenResponse,
 } from "./types";
 
 export class ChatApi extends Api {
@@ -31,7 +33,9 @@ export class ChatApi extends Api {
   }
 
   public deleteUsersFromChat(request: DeleteUsersFromChatRequest) {
-    return this.http.delete<SuccessResponse>("users", { data: request });
+    return this.http.delete<SuccessResponse>(this.path("users"), {
+      data: request,
+    });
   }
 
   public getChatUsers(request: GetChatUsersRequest) {
@@ -40,6 +44,12 @@ export class ChatApi extends Api {
       {
         data: request,
       },
+    );
+  }
+
+  public getToken(request: GetTokenRequest) {
+    return this.http.post<GetTokenResponse>(
+      this.path(`token/${request.chatId}`),
     );
   }
 }

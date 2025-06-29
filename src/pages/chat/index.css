@@ -1,6 +1,10 @@
 @import url("../../css/uikit.css");
 
 .chat {
+  &__wrapper {
+    height: 100%;
+  }
+  
   &__root {
     --sidebar-width: 310px;
 

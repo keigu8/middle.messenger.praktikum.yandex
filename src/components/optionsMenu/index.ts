@@ -5,6 +5,7 @@ import { OptionsMenuItem } from "../optionsMenuItem";
 
 type State = {
   optionsMenu: string[];
+  visible: boolean;
 };
 
 export class OptionsMenu extends View<State> {
