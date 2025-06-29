@@ -2,15 +2,15 @@ import { View } from "../../lib/view";
 import template from "./table.hbs?raw";
 import "./index.css";
 
-type State = {
+export type TableState = {
   data: Array<{
     label: string;
     value: string;
   }>;
 };
 
-export class Table extends View<State> {
-  constructor(state: State) {
+export class Table extends View<TableState> {
+  constructor(state: TableState) {
     super(state);
   }
 

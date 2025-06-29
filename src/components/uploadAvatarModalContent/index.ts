@@ -1,12 +1,13 @@
 import { View } from "../../lib/view";
+import type { UserService } from "../../services/user";
 import { Form, type FormState } from "../form";
 import template from "./uploadAvatarModalContent.hbs?raw";
 
 type UploadAvatarForm = {
-  avatar: string;
+  avatar: File | null;
 };
 
-type State = {
+export type UploadAvatarModalState = {
   title: string;
   buttonTitle: string;
   fields: FormState<UploadAvatarForm>["fields"];
@@ -14,8 +15,12 @@ type State = {
   error: string;
 };
 
-export class UploadAvatarModalContent extends View<State> {
-  constructor(state: State) {
+export class UploadAvatarModalContent extends View<UploadAvatarModalState> {
+  constructor(
+    state: UploadAvatarModalState,
+    userService: UserService,
+    onSuccess: VoidFunction,
+  ) {
     super(state, {
       Form: new Form(
         {
@@ -23,8 +28,13 @@ export class UploadAvatarModalContent extends View<State> {
           submitTitle: state.submitTitle,
           context: "",
         },
-        console.log,
-        console.log,
+        undefined,
+        () => {
+          const avatar = this.node.querySelector("input")?.files?.[0];
+          if (avatar) {
+            userService.editAvatar({ avatar }, onSuccess);
+          }
+        },
       ),
     });
   }

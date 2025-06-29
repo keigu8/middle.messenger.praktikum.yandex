@@ -14,6 +14,6 @@ export class Modal extends View<State> {
   }
 
   protected render(): string {
-    return this.state.visible ? template : "";
+    return template;
   }
 }

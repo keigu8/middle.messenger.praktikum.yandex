@@ -7,7 +7,7 @@ import {
 import type { Router } from "../../lib/router";
 
 export class AuthService {
-  private user: UserResponse | null = null;
+  private _user: UserResponse | null = null;
 
   constructor(
     private readonly authApi: AuthApi,
@@ -15,34 +15,47 @@ export class AuthService {
   ) {}
 
   public get isAuthorized() {
-    return this.user !== null;
+    return this._user !== null;
+  }
+
+  public get user() {
+    return this._user;
+  }
+
+  public setUser(value: UserResponse) {
+    this._user = value;
   }
 
   public async init() {
+    await this.refreshUser();
+  }
+
+  private async refreshUser() {
     await this.authApi
       .user()
       .then((user) => {
-        this.user = user;
+        this._user = user;
       })
       .catch(() => {
-        this.user = null;
+        this._user = null;
       });
   }
 
-  public async signup(data: SignupRequest) {
-    await this.authApi.signup(data).then(() => {
+  public signup(data: SignupRequest) {
+    this.authApi.signup(data).then(() => {
       this.router.go("/messenger");
     });
   }
 
-  public async login(data: SigninRequest) {
-    await this.authApi.signin(data).then(() => {
-      this.router.go("/messenger");
-    });
+  public login(data: SigninRequest) {
+    this.authApi
+      .signin(data)
+      .then(() => this.refreshUser())
+      .then(() => this.router.go("/messenger"));
   }
 
-  public async logout() {
-    await this.authApi.logout().then(() => {
+  public logout() {
+    this.authApi.logout().then(() => {
       this.router.go("/");
     });
   }

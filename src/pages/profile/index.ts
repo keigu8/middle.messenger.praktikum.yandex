@@ -1,7 +1,11 @@
-import { profile, ProfilePage } from "./profile";
+import { ProfilePage } from "./profile";
 import "./index.css";
 import { authService } from "../../globals";
+import { getProfileState } from "./state";
 
-const profilePage = new ProfilePage(profile, authService);
+const profilePage = new ProfilePage(
+  getProfileState(authService.user),
+  authService,
+);
 
 export default profilePage;

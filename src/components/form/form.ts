@@ -13,7 +13,7 @@ export type FormState<T extends object> = {
 export class Form<T extends object> extends View<FormState<T>> {
   constructor(
     state: FormState<T>,
-    onBlur: (field: string, value: string) => void,
+    onBlur: ((field: string, value: string) => void) | undefined,
     onSubmit: (values: FormState<T>["fields"]) => void,
   ) {
     super(state, {
@@ -24,9 +24,10 @@ export class Form<T extends object> extends View<FormState<T>> {
               name: fieldName,
               ...state.fields[fieldName as keyof T],
             },
-            (value: string) => {
-              onBlur(fieldName, value);
-            },
+            onBlur &&
+              ((value: string) => {
+                onBlur(fieldName, value);
+              }),
           ),
       ),
       Button: new Button(

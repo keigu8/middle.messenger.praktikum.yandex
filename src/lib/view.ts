@@ -182,6 +182,10 @@ export abstract class View<T extends object> {
     return this._node;
   }
 
+  public get views() {
+    return this._stubs;
+  }
+
   public dispatchComponentDidMount() {
     this._eventBus.emit(View.Lifecycle.Cdm);
   }
