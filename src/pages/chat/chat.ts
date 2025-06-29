@@ -1,9 +1,11 @@
+import { Button } from "../../components/button";
 import { ChatPreview } from "../../components/chatPreview";
 import { ChatView } from "../../components/chatView";
-import { Form, type FormState } from "../../components/form";
+import { Form, mapFields, type FormState } from "../../components/form";
 import { validate } from "../../components/form/validateForm";
 import { OptionsMenu } from "../../components/optionsMenu";
 import { Separator } from "../../components/separator";
+import { chatService } from "../../globals";
 import { View } from "../../lib/view";
 import template from "./chat.hbs?raw";
 
@@ -37,6 +39,7 @@ export type ChatPageState = {
     inputPlaceholder: string;
   };
   optionsMenu: string[];
+  showCreateChatButton: boolean;
 } & FormState<SearchForm>;
 
 export class ChatPage extends View<ChatPageState> {
@@ -56,16 +59,38 @@ export class ChatPage extends View<ChatPageState> {
               [field]: { ...state.fields[field as keyof SearchForm], value },
             },
           }));
-        },
-        () => {
+
           if (validate(this.state.fields)) {
-            console.log(this.state.fields);
+            chatService
+              .setSearch(mapFields(this.state.fields).search)
+              .then(() => {
+                if (chatService.chats.length === 0) {
+                  this.updateState((state) => ({
+                    ...state,
+                    showCreateChatButton: true,
+                  }));
+                }
+              });
+          } else {
+            chatService.setSearch("").then(() => {
+              this.updateState((state) => ({
+                ...state,
+                showCreateChatButton: false,
+              }));
+            });
           }
         },
+        () => {},
       ),
       Separator: new Separator(),
       ChatPreviews: state.chatPreviews.map(
         (chatPreview) => new ChatPreview(chatPreview),
+      ),
+      CreateChatButton: new Button(
+        { type: "button", title: "Создать чат", className: "chat__button" },
+        () => {
+          chatService.createChat({ title: chatService.search });
+        },
       ),
       ChatView: new ChatView({
         ...state.chatInfo,

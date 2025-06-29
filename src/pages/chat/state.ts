@@ -8,8 +8,8 @@ export const getChatPageState = (chats: GetChatsResponse): ChatPageState => ({
   },
   chatPreviews: chats.map((chat) => ({
     title: chat.title,
-    subtitle: chat.last_message.content || "",
-    last: chat.last_message.time || "",
+    subtitle: chat.last_message?.content || "Нет сообщений в чате",
+    last: chat.last_message?.time || "",
     count: chat.unread_count || undefined,
   })),
   placeholder: "Выберите чат чтобы отправить сообщение",
@@ -47,4 +47,5 @@ export const getChatPageState = (chats: GetChatsResponse): ChatPageState => ({
   },
   submitTitle: "",
   context: "chat",
+  showCreateChatButton: false,
 });

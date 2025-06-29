@@ -20,7 +20,11 @@ export class ChatService {
     return this._chats;
   }
 
-  public async init() {
+  public init() {
+    return this.refreshChats();
+  }
+
+  private async refreshChats() {
     this._chats = await this.chatApi.getChats(
       this._search
         ? {
@@ -30,6 +34,15 @@ export class ChatService {
     );
   }
 
+  public get search() {
+    return this._search;
+  }
+
+  public setSearch(value: string) {
+    this._search = value;
+    return this.refreshChats();
+  }
+
   public createChat(data: CreateChatRequest) {
     this.chatApi.createChat(data).then((response) => {
       this._chats = [
@@ -37,7 +50,7 @@ export class ChatService {
         {
           ...data,
           id: response.id,
-          last_message: {},
+          last_message: null,
           avatar: "",
           unread_count: 0,
           created_by: this.authService.user!.id,

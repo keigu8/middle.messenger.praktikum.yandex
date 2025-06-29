@@ -40,4 +40,11 @@
 
     margin: auto;
   }
+
+  &__button {
+    @mixin button_mode_accent;
+
+    width: 100%;
+    margin: var(--spacing-m) 0;
+  }
 }

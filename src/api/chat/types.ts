@@ -21,11 +21,11 @@ export type DeleteUsersFromChatRequest = {
 export type GetChatsResponse = Array<{
   id: number;
   title: string;
-  avatar: string;
+  avatar: string | null;
   unread_count: number;
   created_by: number;
   last_message: {
-    user?: {
+    user: {
       first_name: string;
       second_name: string;
       avatar: string;
@@ -33,9 +33,9 @@ export type GetChatsResponse = Array<{
       login: string;
       phone: string;
     };
-    time?: string;
-    content?: string;
-  };
+    time: string;
+    content: string;
+  } | null;
 }>;
 
 export type CreateChatResponse = {
