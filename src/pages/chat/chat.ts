@@ -9,7 +9,7 @@ import { Modal, type ModalState } from "../../components/modal";
 import { OptionsMenu } from "../../components/optionsMenu";
 import { Separator } from "../../components/separator";
 import { UserItem } from "../../components/userItem";
-import { chatService, userService } from "../../globals";
+import { authService, chatService, userService } from "../../globals";
 import { View } from "../../lib/view";
 import template from "./chat.hbs?raw";
 
@@ -92,6 +92,44 @@ export class ChatPage extends View<ChatPageState> {
       deleteUsersFromChatModalContent,
     );
 
+    const optionsMenu = new OptionsMenu(
+      {
+        optionsMenu: state.optionsMenu,
+        visible: false,
+      },
+      (index: number) => {
+        if (index === 0) {
+          addUsersToChatModal.updateState(() => ({ visible: true }));
+        } else if (index === 1) {
+          deleteUsersFromChatModalContent.updateViews({
+            UserItems: chatService.selectedChatUsers.map(
+              (user) =>
+                new UserItem(user, (userId) => {
+                  chatService.deleteUsersFromChat(userId);
+                }),
+            ),
+          });
+          deleteUsersFromChatModal.updateState(() => ({ visible: true }));
+        }
+      },
+    );
+
+    const chatView = new ChatView(
+      {
+        ...state.chatInfo,
+        regexp: state.fields.search.regexp!,
+        value: "",
+        selected: false,
+      },
+      chatService,
+      () => {
+        optionsMenu.updateState((state) => ({
+          ...state,
+          visible: !state.visible,
+        }));
+      },
+    );
+
     super(state, {
       Form: new Form(
         {
@@ -134,7 +172,40 @@ export class ChatPage extends View<ChatPageState> {
       ChatPreviews: state.chatPreviews.map(
         (chatPreview) =>
           new ChatPreview(chatPreview, async (chatId) => {
-            await chatService.selectChat(chatId);
+            chatService
+              .selectChat(chatId, (message) => {
+                if (message.type !== "message") {
+                  return;
+                }
+                chatView.updateState((state) => ({
+                  ...state,
+                  messagesByDate: [
+                    {
+                      date: "Сегодня",
+                      messages: [
+                        ...(state.messagesByDate.find(
+                          (messages) => messages.date === "Сегодня",
+                        )?.messages || []),
+                        {
+                          content: message.content,
+                          side:
+                            message.user_id === authService.user?.id
+                              ? "right"
+                              : "left",
+                          time: message.time,
+                        },
+                      ],
+                    },
+                  ],
+                }));
+              })
+              .then((chat) => {
+                chatView.updateState((state) => ({
+                  ...state,
+                  title: chat?.title || "",
+                  selected: true,
+                }));
+              });
           }),
       ),
       CreateChatButton: new Button(
@@ -143,33 +214,10 @@ export class ChatPage extends View<ChatPageState> {
           chatService.createChat({ title: chatService.search });
         },
       ),
-      ChatView: new ChatView({
-        ...state.chatInfo,
-        regexp: state.fields.search.regexp!,
-        value: "",
-      }),
+      ChatView: chatView,
       AddUsersToChatModal: addUsersToChatModal,
       DeleteUsersFromChatModal: deleteUsersFromChatModal,
-      OptionsMenu: new OptionsMenu(
-        {
-          optionsMenu: state.optionsMenu,
-        },
-        (index: number) => {
-          if (index === 0) {
-            addUsersToChatModal.updateState(() => ({ visible: true }));
-          } else if (index === 1) {
-            deleteUsersFromChatModalContent.updateViews({
-              UserItems: chatService.selectedChatUsers.map(
-                (user) =>
-                  new UserItem(user, (userId) => {
-                    chatService.deleteUsersFromChat(userId);
-                  }),
-              ),
-            });
-            deleteUsersFromChatModal.updateState(() => ({ visible: true }));
-          }
-        },
-      ),
+      OptionsMenu: optionsMenu,
     });
   }
 

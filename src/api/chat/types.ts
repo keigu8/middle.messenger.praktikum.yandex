@@ -26,6 +26,14 @@ export type GetChatUsersRequest = {
   email?: string;
 };
 
+export type GetTokenRequest = {
+  chatId: number;
+};
+
+export type GetTokenResponse = {
+  token: string;
+};
+
 export type GetChatsResponse = Array<{
   id: number;
   title: string;

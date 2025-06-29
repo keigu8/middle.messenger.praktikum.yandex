@@ -1,4 +1,5 @@
 import { View } from "../../lib/view";
+import type { ChatService } from "../../services/chat";
 import { Button } from "../button";
 import template from "./chatView.hbs?raw";
 import "./index.css";
@@ -18,10 +19,15 @@ type State = {
   regexp: RegExp;
   isError?: boolean;
   value: string;
+  selected: boolean;
 };
 
 export class ChatView extends View<State> {
-  constructor(state: State) {
+  constructor(
+    state: State,
+    chatService: ChatService,
+    onOptionsMenuButtonClick: VoidFunction,
+  ) {
     super(
       state,
       {
@@ -33,7 +39,17 @@ export class ChatView extends View<State> {
           },
           (event) => {
             event.preventDefault();
-            console.log(this.state.value);
+            chatService.send(this.state.value);
+          },
+        ),
+        OptionsMenuButton: new Button(
+          {
+            type: "button",
+            src: "/assets/menu.svg",
+            className: "chatView__button",
+          },
+          () => {
+            onOptionsMenuButtonClick();
           },
         ),
       },
