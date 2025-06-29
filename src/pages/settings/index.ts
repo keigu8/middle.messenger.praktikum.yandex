@@ -1,7 +1,11 @@
-import { mountRoot } from "../../lib/mountRoot";
-import { settings, SettingsPage } from "./settings";
+import { SettingsPage } from "./settings";
 import "./index.css";
+import { getSettingsPageState } from "./state";
+import { authService, userService } from "../../globals";
 
-const settingsPage = new SettingsPage(settings);
+const settingsPage = new SettingsPage(
+  getSettingsPageState(authService.user),
+  userService,
+);
 
-mountRoot(settingsPage);
+export default settingsPage;

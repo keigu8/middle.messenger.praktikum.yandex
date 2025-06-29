@@ -1,7 +1,7 @@
-import { mountRoot } from "../../lib/mountRoot";
 import { signup, SignupPage } from "./signup";
 import "./index.css";
+import { authService } from "../../globals";
 
-const signupPage = new SignupPage(signup);
+const signupPage = new SignupPage(signup, authService);
 
-mountRoot(signupPage);
+export default signupPage;

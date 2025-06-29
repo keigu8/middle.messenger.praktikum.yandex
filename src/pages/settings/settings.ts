@@ -1,65 +1,24 @@
-import { Form, type FormState } from "../../components/form";
+import { Form, mapFields, type FormState } from "../../components/form";
 import { validate } from "../../components/form/validateForm";
 import { View } from "../../lib/view";
+import type { UserService } from "../../services/user";
 import template from "./settings.hbs?raw";
 
-const form: FormState = {
-  context: "settings",
-  fields: {
-    first_name: {
-      label: "Имя",
-      type: "text",
-      value: "",
-      regexp: new RegExp(/^(?:[A-ZА-Я][a-zа-яёЁ-]*)$/),
-    },
-    last_name: {
-      label: "Фамилия",
-      type: "text",
-      value: "",
-      regexp: new RegExp(/^(?:[A-ZА-Я][a-zа-яёЁ-]*)$/),
-    },
-    login: {
-      label: "Логин",
-      type: "text",
-      value: "",
-      regexp: new RegExp(/^[a-zA-Z0-9-]{3,20}$/),
-    },
-    email: {
-      label: "Почта",
-      type: "text",
-      value: "",
-      regexp: new RegExp(/^[A-Za-z0-9_-]+@[A-Za-z]+\.[A-Za-z]{2,}$/),
-    },
-    phone: {
-      label: "Телефон",
-      type: "text",
-      value: "",
-      regexp: new RegExp(/^\+?[0-9]{9,14}$/),
-    },
-    password: {
-      label: "Пароль",
-      type: "password",
-      value: "",
-      regexp: new RegExp(/^(?=.*[0-9])(?=.*[A-Z])([a-zA-Z0-9]+)$/),
-    },
-    display_name: {
-      label: "Имя в чате",
-      type: "text",
-      value: "",
-    },
-  },
-  submitTitle: "Сохранить",
+type SettingsForm = {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  phone: string;
+  display_name: string;
 };
 
-export const settings = {
-  title: "Настройки",
-  ...form,
-};
+export type SettingsPageState = {
+  title: string;
+} & FormState<SettingsForm>;
 
-type State = typeof settings;
-
-export class SettingsPage extends View<State> {
-  constructor(state: State) {
+export class SettingsPage extends View<SettingsPageState> {
+  constructor(state: SettingsPageState, userService: UserService) {
     super(state, {
       Form: new Form(
         {
@@ -72,13 +31,13 @@ export class SettingsPage extends View<State> {
             ...state,
             fields: {
               ...state.fields,
-              [field]: { ...state.fields[field], value },
+              [field]: { ...state.fields[field as keyof SettingsForm], value },
             },
           }));
         },
         () => {
           if (validate(this.state.fields)) {
-            console.log(this.state.fields);
+            userService.editProfile(mapFields(this.state.fields));
           }
         },
       ),

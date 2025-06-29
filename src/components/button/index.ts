@@ -3,7 +3,8 @@ import template from "./button.hbs?raw";
 
 type State = {
   type: string;
-  title: string;
+  title?: string;
+  src?: string;
   className: string;
 };
 
