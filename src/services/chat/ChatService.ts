@@ -21,7 +21,13 @@ export class ChatService {
   }
 
   public async init() {
-    this._chats = await this.chatApi.getChats({ title: this._search });
+    this._chats = await this.chatApi.getChats(
+      this._search
+        ? {
+            title: this._search,
+          }
+        : {},
+    );
   }
 
   public createChat(data: CreateChatRequest) {
