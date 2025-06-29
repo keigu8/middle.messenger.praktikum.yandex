@@ -1,5 +1,7 @@
+import { Button } from "../../components/button";
 import { Form, mapFields, type FormState } from "../../components/form";
 import { validate } from "../../components/form/validateForm";
+import { router } from "../../globals";
 import { View } from "../../lib/view";
 import type { AuthService } from "../../services/auth";
 import template from "./login.hbs?raw";
@@ -63,6 +65,14 @@ export class LoginPage extends View<State> {
             authService.login(mapFields(this.state.fields));
           }
         },
+      ),
+      Button: new Button(
+        {
+          type: "button",
+          title: state.linkTitle,
+          className: "login__link",
+        },
+        () => router.go("/sign-up"),
       ),
     });
   }

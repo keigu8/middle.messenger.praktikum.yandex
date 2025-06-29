@@ -9,7 +9,7 @@ import {
   UploadAvatarModalContent,
   type UploadAvatarModalState,
 } from "../../components/uploadAvatarModalContent";
-import { userService } from "../../globals";
+import { router, userService } from "../../globals";
 import { View } from "../../lib/view";
 import type { AuthService } from "../../services/auth";
 import template from "./profile.hbs?raw";
@@ -59,6 +59,22 @@ export class ProfilePage extends View<ProfilePageState> {
         },
       ),
       Modal: modal,
+      SettingsButton: new Button(
+        {
+          type: "button",
+          title: state.editProfileButtonTitle,
+          className: "profile__button",
+        },
+        () => router.go("/settings"),
+      ),
+      PasswordButton: new Button(
+        {
+          type: "button",
+          title: state.editPasswordButtonTitle,
+          className: "profile__button",
+        },
+        () => router.go("/password"),
+      ),
     });
   }
 
