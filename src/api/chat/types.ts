@@ -1,7 +1,7 @@
 export type GetChatsRequest = {
-  offset: number;
-  limit: number;
-  title: number;
+  offset?: number;
+  limit?: number;
+  title?: string;
 };
 
 export type CreateChatRequest = {
@@ -25,7 +25,7 @@ export type GetChatsResponse = Array<{
   unread_count: number;
   created_by: number;
   last_message: {
-    user: {
+    user?: {
       first_name: string;
       second_name: string;
       avatar: string;
@@ -33,8 +33,8 @@ export type GetChatsResponse = Array<{
       login: string;
       phone: string;
     };
-    time: string;
-    content: string;
+    time?: string;
+    content?: string;
   };
 }>;
 
