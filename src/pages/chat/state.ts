@@ -7,6 +7,7 @@ export const getChatPageState = (chats: GetChatsResponse): ChatPageState => ({
     title: "Профиль",
   },
   chatPreviews: chats.map((chat) => ({
+    id: chat.id,
     title: chat.title,
     subtitle: chat.last_message?.content || "Нет сообщений в чате",
     last: chat.last_message?.time || "",

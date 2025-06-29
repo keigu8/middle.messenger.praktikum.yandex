@@ -18,6 +18,14 @@ export type DeleteUsersFromChatRequest = {
   chatId: number;
 };
 
+export type GetChatUsersRequest = {
+  chatId: number;
+  offset?: number;
+  limit?: number;
+  name?: string;
+  email?: string;
+};
+
 export type GetChatsResponse = Array<{
   id: number;
   title: string;
@@ -41,3 +49,13 @@ export type GetChatsResponse = Array<{
 export type CreateChatResponse = {
   id: number;
 };
+
+export type GetChatUsersResponse = Array<{
+  id: number;
+  first_name: string;
+  second_name: string;
+  display_name: string;
+  login: string;
+  avatar: string;
+  role: string;
+}>;

@@ -2,6 +2,7 @@ import type {
   ChatApi,
   CreateChatRequest,
   GetChatsResponse,
+  GetChatUsersResponse,
 } from "../../api/chat";
 import type { AuthService } from "../auth";
 
@@ -9,6 +10,7 @@ export class ChatService {
   private _search: string = "";
   private _chats: GetChatsResponse = [];
   private _selectedChatId: number | null = null;
+  private _selectedChatUsers: GetChatUsersResponse = [];
 
   constructor(
     private readonly chatApi: ChatApi,
@@ -40,6 +42,15 @@ export class ChatService {
   public setSearch(value: string) {
     this._search = value;
     return this.refreshChats();
+  }
+
+  public get selectedChatUsers() {
+    return this._selectedChatUsers;
+  }
+
+  public async selectChat(chatId: number) {
+    this._selectedChatId = chatId;
+    this._selectedChatUsers = await this.chatApi.getChatUsers({ chatId });
   }
 
   public createChat(data: CreateChatRequest) {

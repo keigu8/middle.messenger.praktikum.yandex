@@ -8,6 +8,7 @@ import { validate } from "../../components/form/validateForm";
 import { Modal, type ModalState } from "../../components/modal";
 import { OptionsMenu } from "../../components/optionsMenu";
 import { Separator } from "../../components/separator";
+import { UserItem } from "../../components/userItem";
 import { chatService } from "../../globals";
 import { View } from "../../lib/view";
 import template from "./chat.hbs?raw";
@@ -22,6 +23,7 @@ export type ChatPageState = {
     title: string;
   };
   chatPreviews: Array<{
+    id: number;
     title: string;
     subtitle: string;
     last: string;
@@ -63,11 +65,15 @@ export class ChatPage extends View<ChatPageState> {
       ),
     );
 
-    const deleteUsersFromChat = new Modal(
+    const deleteUsersFromChatModalContent = new DeleteUsersFromChatModalContent(
+      { users: [] },
+      chatService,
+    );
+    const deleteUsersFromChatModal = new Modal(
       {
         visible: state.modals.deleteUsersFromChat.visible,
       },
-      new DeleteUsersFromChatModalContent({ users: [] }, chatService),
+      deleteUsersFromChatModalContent,
     );
 
     super(state, {
@@ -110,7 +116,10 @@ export class ChatPage extends View<ChatPageState> {
       ),
       Separator: new Separator(),
       ChatPreviews: state.chatPreviews.map(
-        (chatPreview) => new ChatPreview(chatPreview),
+        (chatPreview) =>
+          new ChatPreview(chatPreview, async (chatId) => {
+            await chatService.selectChat(chatId);
+          }),
       ),
       CreateChatButton: new Button(
         { type: "button", title: "Создать чат", className: "chat__button" },
@@ -124,15 +133,25 @@ export class ChatPage extends View<ChatPageState> {
         value: "",
       }),
       AddUsersToChatModal: addUsersToChatModal,
-      DeleteUsersFromChatModal: deleteUsersFromChat,
+      DeleteUsersFromChatModal: deleteUsersFromChatModal,
       OptionsMenu: new OptionsMenu(
         {
           optionsMenu: state.optionsMenu,
         },
         (index: number) => {
-          console.log(index);
-          //   chatService.deleteUsersFromChat;
-          // }
+          if (index === 0) {
+            return;
+          } else if (index === 1) {
+            deleteUsersFromChatModalContent.updateViews({
+              UserItems: chatService.selectedChatUsers.map(
+                (user) =>
+                  new UserItem(user, (userId) => {
+                    chatService.deleteUsersFromChat(userId);
+                  }),
+              ),
+            });
+            deleteUsersFromChatModal.updateState(() => ({ visible: true }));
+          }
         },
       ),
     });

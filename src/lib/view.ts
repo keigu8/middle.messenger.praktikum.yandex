@@ -193,4 +193,23 @@ export abstract class View<T extends object> {
   public updateState(updator: (state: T) => T) {
     Object.assign(this._state, updator(this._state));
   }
+
+  public updateViews(
+    views: Record<string, View<object> | Array<View<object>>>,
+  ) {
+    keys(views).forEach((key) => {
+      if (Array.isArray(views[key])) {
+        views[key].forEach((view) => {
+          this._views[view.id] = view;
+        });
+        this._stubs[key] = views[key]
+          .map((view) => `<div data-viewid="${view.id}"></div>`)
+          .join("");
+      } else {
+        this._views[views[key].id] = views[key];
+        this._stubs[key] = `<div data-viewid="${views[key].id}"></div>`;
+      }
+    });
+    this._render();
+  }
 }

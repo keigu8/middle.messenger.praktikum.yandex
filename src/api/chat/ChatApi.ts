@@ -7,6 +7,8 @@ import type {
   DeleteUsersFromChatRequest,
   GetChatsRequest,
   GetChatsResponse,
+  GetChatUsersRequest,
+  GetChatUsersResponse,
 } from "./types";
 
 export class ChatApi extends Api {
@@ -30,5 +32,14 @@ export class ChatApi extends Api {
 
   public deleteUsersFromChat(request: DeleteUsersFromChatRequest) {
     return this.http.delete<SuccessResponse>("users", { data: request });
+  }
+
+  public getChatUsers(request: GetChatUsersRequest) {
+    return this.http.get<GetChatUsersResponse>(
+      this.path(`${request.chatId}/users`),
+      {
+        data: request,
+      },
+    );
   }
 }
