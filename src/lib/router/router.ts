@@ -48,7 +48,7 @@ export class Router {
 
   public start() {
     window.onpopstate = ((event: PopStateEvent) => {
-      //@ts-expect-error
+      //@ts-expect-error location exists in currentTarget
       this._onRoute(event.currentTarget?.location.pathname);
     }).bind(this);
 
