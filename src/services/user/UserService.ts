@@ -30,7 +30,7 @@ export class UserService {
     this.userApi.editPassword(data);
   }
 
-  public get(data: SearchUserRequest) {
+  public search(data: SearchUserRequest) {
     return this.userApi.search(data);
   }
 }

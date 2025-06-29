@@ -8,7 +8,7 @@ export abstract class Api {
     this.http = new HTTPTransport();
   }
 
-  protected path(route: string) {
-    return `${import.meta.env.VITE_API_URL}/${this.prefix}/${route}`;
+  protected path(route?: string) {
+    return `${import.meta.env.VITE_API_URL}/${this.prefix}/${route || ""}`;
   }
 }

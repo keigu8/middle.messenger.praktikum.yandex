@@ -33,7 +33,7 @@ export class UserApi extends Api {
   }
 
   public search(request: SearchUserRequest) {
-    return this.http.get<ProfileResponse[]>(this.path("search"), {
+    return this.http.post<ProfileResponse[]>(this.path("search"), {
       data: request,
     });
   }
