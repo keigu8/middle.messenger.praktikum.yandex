@@ -36,13 +36,17 @@ export class ChatService {
   }
 
   private async refreshChats() {
-    this._chats = await this.chatApi.getChats(
-      this._search
-        ? {
-            title: this._search,
-          }
-        : {},
-    );
+    try {
+      this._chats = await this.chatApi.getChats(
+        this._search
+          ? {
+              title: this._search,
+            }
+          : {},
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   public get search() {
