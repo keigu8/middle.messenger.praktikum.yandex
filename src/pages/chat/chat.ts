@@ -9,7 +9,7 @@ import { Modal, type ModalState } from "../../components/modal";
 import { OptionsMenu } from "../../components/optionsMenu";
 import { Separator } from "../../components/separator";
 import { UserItem } from "../../components/userItem";
-import { chatService } from "../../globals";
+import { chatService, userService } from "../../globals";
 import { View } from "../../lib/view";
 import template from "./chat.hbs?raw";
 
@@ -60,14 +60,30 @@ export class ChatPage extends View<ChatPageState> {
       new AddUsersToChatModalContent(
         {
           users: [],
+          fields: {
+            searchUser: {
+              value: "",
+              label: "Поиск пользователей",
+              type: "text",
+            },
+          },
+          submitTitle: "",
+          context: "addUsersModal",
         },
         chatService,
+        userService,
+        () => {
+          addUsersToChatModal.updateState(() => ({ visible: false }));
+        },
       ),
     );
 
     const deleteUsersFromChatModalContent = new DeleteUsersFromChatModalContent(
       { users: [] },
       chatService,
+      () => {
+        deleteUsersFromChatModal.updateState(() => ({ visible: false }));
+      },
     );
     const deleteUsersFromChatModal = new Modal(
       {
@@ -140,7 +156,7 @@ export class ChatPage extends View<ChatPageState> {
         },
         (index: number) => {
           if (index === 0) {
-            return;
+            addUsersToChatModal.updateState(() => ({ visible: true }));
           } else if (index === 1) {
             deleteUsersFromChatModalContent.updateViews({
               UserItems: chatService.selectedChatUsers.map(

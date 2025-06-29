@@ -11,12 +11,12 @@ type State = {
 };
 
 export class DeleteUsersFromChatModalContent extends View<State> {
-  constructor(state: State, chatService: ChatService) {
+  constructor(state: State, chatService: ChatService, onSuccess: VoidFunction) {
     super(state, {
       UserItems: state.users.map(
         (user) =>
           new UserItem(user, (userId) => {
-            chatService.deleteUsersFromChat(userId);
+            chatService.deleteUsersFromChat(userId)?.then(() => onSuccess());
           }),
       ),
     });
