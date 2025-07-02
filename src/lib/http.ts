@@ -78,10 +78,7 @@ export class HTTPTransport {
       });
 
       xhr.onload = (event) => {
-        // @ts-expect-error response exists on target
-        const response = event.target?.response;
-        // @ts-expect-error status exists on target
-        const status = event.target?.status;
+        const { response, status } = event.target as XMLHttpRequest;
         try {
           const json = JSON.parse(response);
           if (status !== 200) {
