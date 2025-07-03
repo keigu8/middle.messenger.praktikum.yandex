@@ -40,6 +40,7 @@ export class ChatView extends View<State> {
           (event) => {
             event.preventDefault();
             chatService.send(this.state.value);
+            this.updateState((state) => ({ ...state, value: "" }));
           },
         ),
         OptionsMenuButton: new Button(
