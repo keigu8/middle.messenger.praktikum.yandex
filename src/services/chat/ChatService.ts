@@ -4,28 +4,24 @@ import type {
   GetChatsResponse,
   GetChatUsersResponse,
 } from "../../api/chat";
-import { WebSocketClient } from "../../lib/ws";
 import type { AuthService } from "../auth";
-import type { Message } from "./types";
+import {
+  MessageService,
+  type GetOldResponse,
+  type MessageResponse,
+} from "../message";
 
 export class ChatService {
-  private _ws: WebSocketClient | null = null;
   private _search: string = "";
   private _chats: GetChatsResponse = [];
   private _selectedChatId: number | null = null;
   private _selectedChatUsers: GetChatUsersResponse = [];
+  private _messageService: MessageService | null = null;
 
   constructor(
     private readonly chatApi: ChatApi,
     private readonly authService: AuthService,
   ) {}
-
-  private get ws() {
-    if (!this._ws) {
-      throw Error("Web socket is not initialized");
-    }
-    return this._ws;
-  }
 
   public get chats() {
     return this._chats;
@@ -33,6 +29,13 @@ export class ChatService {
 
   public async init() {
     await this.refreshChats();
+  }
+
+  private get messageService() {
+    if (!this._messageService) {
+      throw new Error("Message Service is not initialized");
+    }
+    return this._messageService;
   }
 
   private async refreshChats() {
@@ -64,15 +67,17 @@ export class ChatService {
 
   public async selectChat(
     chatId: number,
-    callback: (message: Message) => void,
+    onMessage: (message: MessageResponse) => void,
+    onGetOld: (messages: GetOldResponse) => void,
   ) {
     this._selectedChatId = chatId;
     this._selectedChatUsers = await this.chatApi.getChatUsers({ chatId });
-    const { token } = await this.chatApi.getToken({ chatId });
-    this._ws = new WebSocketClient(
-      `${this.authService.user!.id}/${chatId}/${token}`,
+    this._messageService = new MessageService(
+      chatId,
+      this.chatApi,
+      this.authService,
     );
-    this._ws.subscribe(callback);
+    this._messageService.init(onMessage, onGetOld);
     return this._chats.find((chat) => chat.id === chatId);
   }
 
@@ -113,6 +118,6 @@ export class ChatService {
   }
 
   public send(message: string) {
-    this.ws.send(message);
+    this.messageService.sendMessage(message);
   }
 }

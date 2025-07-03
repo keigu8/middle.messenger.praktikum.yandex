@@ -40,6 +40,7 @@ export class ChatView extends View<State> {
           (event) => {
             event.preventDefault();
             chatService.send(this.state.value);
+            this.updateState((state) => ({ ...state, value: "" }));
           },
         ),
         OptionsMenuButton: new Button(
@@ -54,9 +55,8 @@ export class ChatView extends View<State> {
         ),
       },
       {
-        blur: (event: FocusEvent) => {
-          //@ts-expect-error target.value exists on FocusEvent
-          const value = event.target.value;
+        blur: (event: Event) => {
+          const value = (event.target as HTMLInputElement).value;
           if (this.state.regexp && !this.state.regexp.test(value)) {
             this.updateState((state) => ({ ...state, value, isError: true }));
           } else {

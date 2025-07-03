@@ -18,9 +18,8 @@ export class Field extends View<State> {
       undefined,
       onBlur
         ? {
-            blur: (event: FocusEvent) => {
-              //@ts-expect-error target.value exists on FocusEvent
-              const value = event.target.value;
+            blur: (event: Event) => {
+              const value = (event.target as HTMLInputElement).value;
               onBlur(value);
               this.updateState((state) => ({
                 ...state,

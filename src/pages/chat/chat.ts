@@ -12,6 +12,7 @@ import { UserItem } from "../../components/userItem";
 import { authService, chatService, router, userService } from "../../globals";
 import { View } from "../../lib/view";
 import template from "./chat.hbs?raw";
+import { appendMessageToMessagesByDate, getMessagesByDate } from "./utils";
 
 type SearchForm = {
   search: string;
@@ -173,32 +174,28 @@ export class ChatPage extends View<ChatPageState> {
         (chatPreview) =>
           new ChatPreview(chatPreview, async (chatId) => {
             chatService
-              .selectChat(chatId, (message) => {
-                if (message.type !== "message") {
-                  return;
-                }
-                chatView.updateState((state) => ({
-                  ...state,
-                  messagesByDate: [
-                    {
-                      date: "Сегодня",
-                      messages: [
-                        ...(state.messagesByDate.find(
-                          (messages) => messages.date === "Сегодня",
-                        )?.messages || []),
-                        {
-                          content: message.content,
-                          side:
-                            message.user_id === authService.user?.id
-                              ? "right"
-                              : "left",
-                          time: message.time,
-                        },
-                      ],
-                    },
-                  ],
-                }));
-              })
+              .selectChat(
+                chatId,
+                (message) => {
+                  chatView.updateState((state) => ({
+                    ...state,
+                    messagesByDate: appendMessageToMessagesByDate(
+                      state.messagesByDate,
+                      message,
+                      authService.user!.id,
+                    ),
+                  }));
+                },
+                (messages) => {
+                  chatView.updateState((state) => ({
+                    ...state,
+                    messagesByDate: getMessagesByDate(
+                      messages,
+                      authService.user!.id,
+                    ),
+                  }));
+                },
+              )
               .then((chat) => {
                 chatView.updateState((state) => ({
                   ...state,

@@ -17,6 +17,11 @@ type RequestOptions = Options & {
   method: string;
 };
 
+type HTTPMethod = <R = unknown>(
+  url: string,
+  options?: Partial<Options>,
+) => Promise<R>;
+
 type ErrorResponse = {
   reason: string;
 };
@@ -31,33 +36,18 @@ export class HTTPTransport {
     Delete: "DELETE",
   };
 
-  public get<R>(url: string, options?: Options) {
-    return this.request<R>(
-      options?.data ? `${url}${queryStringify(options.data)}` : url,
-      { ...options, method: HTTPTransport.Method.Get },
-    );
+  private createMethod(method: string): HTTPMethod {
+    return <R>(url: string, options: Options = {}) =>
+      this.request<R>(url, { ...options, method });
   }
 
-  public post<R>(url: string, options?: Options) {
-    return this.request<R>(url, {
-      ...options,
-      method: HTTPTransport.Method.Post,
-    });
-  }
+  public get = this.createMethod(HTTPTransport.Method.Get);
 
-  public put<R>(url: string, options?: Options) {
-    return this.request<R>(url, {
-      ...options,
-      method: HTTPTransport.Method.Put,
-    });
-  }
+  public post = this.createMethod(HTTPTransport.Method.Post);
 
-  public delete<R>(url: string, options?: Options) {
-    return this.request<R>(url, {
-      ...options,
-      method: HTTPTransport.Method.Delete,
-    });
-  }
+  public put = this.createMethod(HTTPTransport.Method.Put);
+
+  public delete = this.createMethod(HTTPTransport.Method.Delete);
 
   private request = <R>(url: string, options: RequestOptions): Promise<R> => {
     const {
@@ -67,6 +57,10 @@ export class HTTPTransport {
       timeout = 5000,
       format = "json",
     } = options;
+
+    if (method === HTTPTransport.Method.Get && data) {
+      url = `${url}${queryStringify(data)}`;
+    }
 
     return new Promise(function (resolve, reject) {
       const xhr = new XMLHttpRequest();
@@ -78,10 +72,7 @@ export class HTTPTransport {
       });
 
       xhr.onload = (event) => {
-        // @ts-expect-error
-        const response = event.target?.response;
-        // @ts-expect-error
-        const status = event.target?.status;
+        const { response, status } = event.target as XMLHttpRequest;
         try {
           const json = JSON.parse(response);
           if (status !== 200) {

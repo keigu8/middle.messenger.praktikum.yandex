@@ -1,13 +1,20 @@
 import type { View } from "../view";
 import { Route } from "./route";
+import type { Filter } from "./types";
 
 export class Router {
   private readonly _routes: Route[];
   private _currentRoute: Route | null;
+  private _redirects: Filter | null;
 
   constructor() {
     this._routes = [];
     this._currentRoute = null;
+    this._redirects = null;
+  }
+
+  public setupRedirects(redirects: Filter) {
+    this._redirects = redirects;
   }
 
   private get history() {
@@ -19,12 +26,14 @@ export class Router {
   }
 
   private _onRoute(pathname: string) {
-    const route = this._getRoute(pathname);
-
-    if (route?.condition && !route?.condition?.()) {
-      this.go("/");
-      return;
+    if (this._redirects) {
+      const redirect = this._redirects(pathname);
+      if (redirect) {
+        window.location.pathname = redirect;
+      }
     }
+
+    const route = this._getRoute(pathname);
 
     if (!route) {
       return;
@@ -38,8 +47,8 @@ export class Router {
     route.navigate();
   }
 
-  public use(pathname: string, view: View<object>, condition?: () => boolean) {
-    const route = new Route(pathname, view, condition);
+  public use(pathname: string, view: View<object>) {
+    const route = new Route(pathname, view);
 
     this._routes.push(route);
 
@@ -48,8 +57,7 @@ export class Router {
 
   public start() {
     window.onpopstate = ((event: PopStateEvent) => {
-      //@ts-expect-error
-      this._onRoute(event.currentTarget?.location.pathname);
+      this._onRoute((event.currentTarget as Window).location.pathname);
     }).bind(this);
 
     this._onRoute(window.location.pathname);
