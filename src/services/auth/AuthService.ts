@@ -4,7 +4,8 @@ import {
   type SignupRequest,
   type UserResponse,
 } from "../../api/auth";
-import type { Router } from "../../lib/router";
+import { Path, type Router } from "../../lib/router";
+import { authPaths } from "./paths";
 
 export class AuthService {
   private _user: UserResponse | null = null;
@@ -26,6 +27,15 @@ export class AuthService {
     this._user = value;
   }
 
+  public checkPath(pathname: Path) {
+    if (this.isAuthorized && !authPaths.has(pathname)) {
+      return Path.Messenger;
+    } else if (!this.isAuthorized && authPaths.has(pathname)) {
+      return Path.Login;
+    }
+    return null;
+  }
+
   public async init() {
     await this.refreshUser();
   }
@@ -35,18 +45,20 @@ export class AuthService {
       .user()
       .then((user) => {
         this._user = user;
-        this.router.go("/messenger");
       })
       .catch(() => {
         this._user = null;
-        this.router.go("/");
+      })
+      .finally(() => {
+        const path = this.checkPath(window.location.pathname as Path);
+        if (path) {
+          this.router.go(path);
+        }
       });
   }
 
   public signup(data: SignupRequest) {
-    this.authApi.signup(data).then(() => {
-      this.router.go("/messenger");
-    });
+    this.authApi.signup(data).then(() => this.refreshUser());
   }
 
   public login(data: SigninRequest) {
@@ -54,8 +66,6 @@ export class AuthService {
   }
 
   public logout() {
-    this.authApi.logout().then(() => {
-      this.router.go("/");
-    });
+    this.authApi.logout().then(() => this.refreshUser());
   }
 }
