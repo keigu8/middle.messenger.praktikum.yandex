@@ -1,112 +1,136 @@
+import { AddUsersToChatModalContent } from "../../components/addUsersToChatModalContent";
+import { Button } from "../../components/button";
 import { ChatPreview } from "../../components/chatPreview";
 import { ChatView } from "../../components/chatView";
-import { Form, type FormState } from "../../components/form";
+import { DeleteUsersFromChatModalContent } from "../../components/deleteUsersFromChatModalContent";
+import { Form, mapFields, type FormState } from "../../components/form";
 import { validate } from "../../components/form/validateForm";
+import { Modal, type ModalState } from "../../components/modal";
 import { OptionsMenu } from "../../components/optionsMenu";
 import { Separator } from "../../components/separator";
+import { UserItem } from "../../components/userItem";
+import { authService, chatService, router, userService } from "../../globals";
 import { View } from "../../lib/view";
 import template from "./chat.hbs?raw";
+import { appendMessageToMessagesByDate, getMessagesByDate } from "./utils";
 
-const form: FormState = {
-  fields: {
-    search: {
-      label: "Поиск",
-      type: "text",
-      value: "",
-      regexp: new RegExp(/^.+$/),
-    },
-  },
-  submitTitle: "",
-  context: "chat",
+type SearchForm = {
+  search: string;
 };
 
-export const chat = {
-  title: "Чат",
+export type ChatPageState = {
+  title: string;
   profile: {
-    title: "Профиль",
-  },
-  chatPreviews: [
-    {
-      title: "Андрей",
-      subtitle: "Изображение",
-      last: "10:49",
-      count: 2,
-    },
-    {
-      title: "Киноклуб",
-      subtitle: "Вы: стикер",
-      last: "12:00",
-    },
-    {
-      title: "Илья",
-      subtitle: "Друзья, у меня для вас особенный выпуск новостей!",
-      last: "15:12",
-      count: 40,
-    },
-    {
-      title: "Вадим",
-      subtitle: "Вы: Круто!",
-      last: "Пт",
-    },
-    {
-      title: "тет-а-теты",
-      subtitle: "И Human Interface Guidelines и Material Design рекомендуют",
-      last: "Ср",
-    },
-    {
-      title: "1, 2, 3",
-      subtitle: "Миллионы россиян ежедневно проводят десятки часов свое",
-      last: "Пн",
-    },
-    {
-      title: "Design Destroyer",
-      subtitle: "В 2008 году художник Jon Rafman  начал собирать",
-      last: "Пн",
-    },
-    {
-      title: "Day.",
-      subtitle:
-        "Так увлёкся работой по курсу, что совсем забыл его анонсировать",
-      last: "1 Мая 2020",
-    },
-    {
-      title: "Стас Рогозин",
-      subtitle: "Можно или сегодня или завтра вечером.",
-      last: "12 Апр 2020",
-    },
-  ],
-  placeholder: "Выберите чат чтобы отправить сообщение",
+    title: string;
+  };
+  chatPreviews: Array<{
+    id: number;
+    title: string;
+    subtitle: string;
+    last: string;
+    count?: number;
+  }>;
+  placeholder: string;
   chatInfo: {
-    title: "Вадим",
-    messagesByDate: [
+    title: string;
+    messagesByDate: Array<{
+      date: string;
+      messages: Array<{
+        content: string;
+        side: string;
+        time: string;
+      }>;
+    }>;
+    sendTitle: string;
+    inputPlaceholder: string;
+  };
+  optionsMenu: string[];
+  showCreateChatButton: boolean;
+  modals: {
+    addUsersToChat: ModalState;
+    deleteUsersFromChat: ModalState;
+  };
+} & FormState<SearchForm>;
+
+export class ChatPage extends View<ChatPageState> {
+  constructor(state: ChatPageState) {
+    const addUsersToChatModal = new Modal(
       {
-        date: "19 июня",
-        messages: [
-          {
-            content:
-              "Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.",
-            side: "left",
-            time: "11:56",
-          },
-          {
-            content: "Круто!",
-            side: "right",
-            time: "12:00",
-          },
-        ],
+        visible: state.modals.addUsersToChat.visible,
       },
-    ],
-    sendTitle: "Отправить",
-    inputPlaceholder: "Сообщение",
-  },
-  optionsMenu: ["Добавить пользователя", "Удалить пользователя"],
-  ...form,
-};
+      new AddUsersToChatModalContent(
+        {
+          users: [],
+          fields: {
+            searchUser: {
+              value: "",
+              label: "Поиск пользователей",
+              type: "text",
+            },
+          },
+          submitTitle: "",
+          context: "addUsersModal",
+        },
+        chatService,
+        userService,
+        () => {
+          addUsersToChatModal.updateState(() => ({ visible: false }));
+        },
+      ),
+    );
 
-type State = typeof chat;
+    const deleteUsersFromChatModalContent = new DeleteUsersFromChatModalContent(
+      { users: [] },
+      chatService,
+      () => {
+        deleteUsersFromChatModal.updateState(() => ({ visible: false }));
+      },
+    );
+    const deleteUsersFromChatModal = new Modal(
+      {
+        visible: state.modals.deleteUsersFromChat.visible,
+      },
+      deleteUsersFromChatModalContent,
+    );
 
-export class ChatPage extends View<State> {
-  constructor(state: State) {
+    const optionsMenu = new OptionsMenu(
+      {
+        optionsMenu: state.optionsMenu,
+        visible: false,
+      },
+      (index: number) => {
+        if (index === 0) {
+          addUsersToChatModal.updateState(() => ({ visible: true }));
+        } else if (index === 1) {
+          deleteUsersFromChatModalContent.updateViews({
+            UserItems: chatService.selectedChatUsers.map(
+              (user) =>
+                new UserItem(user, (userId) => {
+                  chatService.deleteUsersFromChat(userId);
+                }),
+            ),
+          });
+          deleteUsersFromChatModal.updateState(() => ({ visible: true }));
+        }
+      },
+    );
+
+    const chatView = new ChatView(
+      {
+        ...state.chatInfo,
+        regexp: state.fields.search.regexp!,
+        value: "",
+        selected: false,
+      },
+      chatService,
+      () => {
+        optionsMenu.updateState((state) => ({
+          ...state,
+          visible: !state.visible,
+        }));
+      },
+    );
+
     super(state, {
       Form: new Form(
         {
@@ -119,22 +143,86 @@ export class ChatPage extends View<State> {
             ...state,
             fields: {
               ...state.fields,
-              [field]: { ...state.fields[field], value },
+              [field]: { ...state.fields[field as keyof SearchForm], value },
             },
           }));
-        },
-        () => {
+
           if (validate(this.state.fields)) {
-            console.log(this.state.fields);
+            chatService
+              .setSearch(mapFields(this.state.fields).search)
+              .then(() => {
+                if (chatService.chats.length === 0) {
+                  this.updateState((state) => ({
+                    ...state,
+                    showCreateChatButton: true,
+                  }));
+                }
+              });
+          } else {
+            chatService.setSearch("").then(() => {
+              this.updateState((state) => ({
+                ...state,
+                showCreateChatButton: false,
+              }));
+            });
           }
         },
+        () => {},
       ),
       Separator: new Separator(),
       ChatPreviews: state.chatPreviews.map(
-        (chatPreview) => new ChatPreview(chatPreview),
+        (chatPreview) =>
+          new ChatPreview(chatPreview, async (chatId) => {
+            chatService
+              .selectChat(
+                chatId,
+                (message) => {
+                  chatView.updateState((state) => ({
+                    ...state,
+                    messagesByDate: appendMessageToMessagesByDate(
+                      state.messagesByDate,
+                      message,
+                      authService.user!.id,
+                    ),
+                  }));
+                },
+                (messages) => {
+                  chatView.updateState((state) => ({
+                    ...state,
+                    messagesByDate: getMessagesByDate(
+                      messages,
+                      authService.user!.id,
+                    ),
+                  }));
+                },
+              )
+              .then((chat) => {
+                chatView.updateState((state) => ({
+                  ...state,
+                  title: chat?.title || "",
+                  selected: true,
+                }));
+              });
+          }),
       ),
-      ChatView: new ChatView({ ...state.chatInfo, regexp: state.fields.search.regexp!, value: '' }),
-      OptionsMenu: new OptionsMenu({ optionsMenu: state.optionsMenu }),
+      CreateChatButton: new Button(
+        { type: "button", title: "Создать чат", className: "chat__button" },
+        () => {
+          chatService.createChat({ title: chatService.search });
+        },
+      ),
+      ChatView: chatView,
+      AddUsersToChatModal: addUsersToChatModal,
+      DeleteUsersFromChatModal: deleteUsersFromChatModal,
+      OptionsMenu: optionsMenu,
+      ProfileButton: new Button(
+        {
+          type: "button",
+          title: state.profile.title,
+          className: "chat__link",
+        },
+        () => router.go("/profile"),
+      ),
     });
   }
 

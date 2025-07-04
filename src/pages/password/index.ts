@@ -1,7 +1,8 @@
-import { mountRoot } from "../../lib/mountRoot";
-import { password, PasswordPage } from "./password";
+import { PasswordPage } from "./password";
 import "./index.css";
+import { getPasswordPageState } from "./state";
+import { userService } from "../../globals";
 
-const passwordPage = new PasswordPage(password);
+const passwordPage = new PasswordPage(getPasswordPageState(), userService);
 
-mountRoot(passwordPage);
+export default passwordPage;

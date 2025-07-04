@@ -1,9 +1,25 @@
-import { Form, type FormState } from "../../components/form";
-import { validate } from "../../components/form/validateForm";
+import { Button } from "../../components/button";
+import {
+  type FormState,
+  Form,
+  validate,
+  mapFields,
+} from "../../components/form";
+import { router } from "../../globals";
 import { View } from "../../lib/view";
+import type { AuthService } from "../../services/auth";
 import template from "./signup.hbs?raw";
 
-const form: FormState = {
+type SignupForm = {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  phone: string;
+  password: string;
+};
+
+const form: FormState<SignupForm> = {
   fields: {
     first_name: {
       label: "Имя",
@@ -56,10 +72,10 @@ type State = {
   title: string;
   linkTitle: string;
   submitTitle: string;
-} & FormState;
+} & FormState<SignupForm>;
 
 export class SignupPage extends View<State> {
-  constructor(state: State) {
+  constructor(state: State, authService: AuthService) {
     super(state, {
       Form: new Form(
         {
@@ -72,15 +88,23 @@ export class SignupPage extends View<State> {
             ...state,
             fields: {
               ...state.fields,
-              [field]: { ...state.fields[field], value },
+              [field]: { ...state.fields[field as keyof SignupForm], value },
             },
           }));
         },
-        () => {
+        async () => {
           if (validate(this.state.fields)) {
-            console.log(this.state.fields);
+            await authService.signup(mapFields(this.state.fields));
           }
         },
+      ),
+      Button: new Button(
+        {
+          type: "button",
+          title: state.linkTitle,
+          className: "signup__link",
+        },
+        () => router.go("/"),
       ),
     });
   }

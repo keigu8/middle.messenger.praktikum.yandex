@@ -8,12 +8,25 @@ function queryStringify(data: object) {
 
 type Options = {
   headers?: Record<string, string>;
-  method: string;
   data?: object;
   timeout?: number;
+  format?: "json" | "formdata";
 };
 
-type HTTPTransportMethod<R = unknown> = (url: string, options?: Options) => Promise<R>;
+type RequestOptions = Options & {
+  method: string;
+};
+
+type HTTPMethod = <R = unknown>(
+  url: string,
+  options?: Partial<Options>,
+) => Promise<R>;
+
+type ErrorResponse = {
+  reason: string;
+};
+
+export type SuccessResponse = "OK";
 
 export class HTTPTransport {
   static Method = {
@@ -23,30 +36,31 @@ export class HTTPTransport {
     Delete: "DELETE",
   };
 
-  public get: HTTPTransportMethod = (url, options) => {
-    return this.request(
-      options?.data ? `${url}${queryStringify(options.data)}` : url,
-      { ...options, method: HTTPTransport.Method.Get },
-    );
-  };
+  private createMethod(method: string): HTTPMethod {
+    return <R>(url: string, options: Options = {}) =>
+      this.request<R>(url, { ...options, method });
+  }
 
-  public post: HTTPTransportMethod = (url, options) => {
-    return this.request(url, { ...options, method: HTTPTransport.Method.Post });
-  };
+  public get = this.createMethod(HTTPTransport.Method.Get);
 
-  public put: HTTPTransportMethod = (url, options) => {
-    return this.request(url, { ...options, method: HTTPTransport.Method.Put });
-  };
+  public post = this.createMethod(HTTPTransport.Method.Post);
 
-  public delete: HTTPTransportMethod = (url, options) => {
-    return this.request(url, {
-      ...options,
-      method: HTTPTransport.Method.Delete,
-    });
-  };
+  public put = this.createMethod(HTTPTransport.Method.Put);
 
-  private request = (url: string, options: Options) => {
-    const { headers = {}, method, data = null, timeout = 5000 } = options;
+  public delete = this.createMethod(HTTPTransport.Method.Delete);
+
+  private request = <R>(url: string, options: RequestOptions): Promise<R> => {
+    const {
+      headers = {},
+      method,
+      data = null,
+      timeout = 5000,
+      format = "json",
+    } = options;
+
+    if (method === HTTPTransport.Method.Get && data) {
+      url = `${url}${queryStringify(data)}`;
+    }
 
     return new Promise(function (resolve, reject) {
       const xhr = new XMLHttpRequest();
@@ -57,8 +71,18 @@ export class HTTPTransport {
         xhr.setRequestHeader(key, headers[key]);
       });
 
-      xhr.onload = function () {
-        resolve(xhr);
+      xhr.onload = (event) => {
+        const { response, status } = event.target as XMLHttpRequest;
+        try {
+          const json = JSON.parse(response);
+          if (status !== 200) {
+            reject(json as ErrorResponse);
+          } else {
+            resolve(json as R);
+          }
+        } catch (_) {
+          resolve(response as R);
+        }
       };
 
       xhr.onabort = reject;
@@ -69,17 +93,23 @@ export class HTTPTransport {
 
       xhr.ontimeout = reject;
 
+      xhr.withCredentials = true;
+
       if (!data) {
         xhr.send();
         return;
       }
 
-      const formData = new FormData();
-
-      keys(data).forEach((key) => {
-        formData.append(key, data[key]);
-      });
-      xhr.send(formData);
+      if (format === "json") {
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.send(JSON.stringify(data));
+      } else if (format === "formdata") {
+        const formData = new FormData();
+        keys(data).forEach((key) => {
+          formData.append(key, data[key]);
+        });
+        xhr.send(formData);
+      }
     });
   };
 }

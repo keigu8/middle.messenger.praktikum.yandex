@@ -1,5 +1,4 @@
 import { ErrorView } from "../../components/errorView";
-import { mountRoot } from "../../lib/mountRoot";
 
 const page404 = new ErrorView({
   title: "404",
@@ -7,4 +6,4 @@ const page404 = new ErrorView({
   link: "Назад к чатам",
 });
 
-mountRoot(page404);
+export default page404;

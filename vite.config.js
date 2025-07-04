@@ -1,27 +1,21 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { resolve } from "path";
 
-const routes = [
-  "index",
-  "login",
-  "signup",
-  "profile",
-  "chat",
-  "settings",
-  "password",
-  "404",
-  "500",
-];
+export default ({ mode }) => {
+  // eslint-disable-next-line no-undef
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
-export default defineConfig({
-  // eslint-disable-next-line
-  root: resolve(__dirname, "src"),
-  build: {
-    // eslint-disable-next-line
-    outDir: resolve(__dirname, "dist"),
-    rollupOptions: {
-      // eslint-disable-next-line
-      input: routes.map((route) => resolve(__dirname, `src/${route}.html`)),
+  return defineConfig({
+    esbuild: {
+      supported: {
+        "top-level-await": true, //browsers can handle top-level-await features
+      },
     },
-  },
-});
+    // eslint-disable-next-line
+  root: resolve(__dirname, "src"),
+    build: {
+      // eslint-disable-next-line
+    outDir: resolve(__dirname, "dist"),
+    },
+  });
+};

@@ -1,7 +1,11 @@
-import { mountRoot } from "../../lib/mountRoot";
-import { profile, ProfilePage } from "./profile";
+import { ProfilePage } from "./profile";
 import "./index.css";
+import { authService } from "../../globals";
+import { getProfileState } from "./state";
 
-const profilePage = new ProfilePage(profile);
+const profilePage = new ProfilePage(
+  getProfileState(authService.user),
+  authService,
+);
 
-mountRoot(profilePage);
+export default profilePage;

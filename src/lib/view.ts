@@ -4,9 +4,7 @@ import { random } from "./random";
 import { keys } from "./keys";
 import EventBus from "./eventBus";
 
-type Handlers = Partial<{
-  [P in keyof HTMLElementEventMap]?: (event: HTMLElementEventMap[P]) => void;
-}>;
+type Handlers = Record<string, EventListenerOrEventListenerObject>;
 
 export abstract class View<T extends object> {
   static Lifecycle = {
@@ -100,7 +98,6 @@ export abstract class View<T extends object> {
       handlerNode = this._node.querySelector(this._handlerNodeSelector)!;
     }
     keys(this._handlers).forEach((handler) => {
-      //@ts-expect-error key exists on handler
       handlerNode?.addEventListener(handler, this._handlers[handler]);
     });
 
@@ -151,7 +148,6 @@ export abstract class View<T extends object> {
       handlerNode = this._node.querySelector(this._handlerNodeSelector)!;
     }
     keys(this._handlers).forEach((handler) => {
-      //@ts-expect-error key exists on handler
       handlerNode?.removeEventListener(handler, this._handlers[handler]);
     });
 
@@ -182,11 +178,34 @@ export abstract class View<T extends object> {
     return this._node;
   }
 
+  public get views() {
+    return this._stubs;
+  }
+
   public dispatchComponentDidMount() {
     this._eventBus.emit(View.Lifecycle.Cdm);
   }
 
   public updateState(updator: (state: T) => T) {
     Object.assign(this._state, updator(this._state));
+  }
+
+  public updateViews(
+    views: Record<string, View<object> | Array<View<object>>>,
+  ) {
+    keys(views).forEach((key) => {
+      if (Array.isArray(views[key])) {
+        views[key].forEach((view) => {
+          this._views[view.id] = view;
+        });
+        this._stubs[key] = views[key]
+          .map((view) => `<div data-viewid="${view.id}"></div>`)
+          .join("");
+      } else {
+        this._views[views[key].id] = views[key];
+        this._stubs[key] = `<div data-viewid="${views[key].id}"></div>`;
+      }
+    });
+    this._render();
   }
 }

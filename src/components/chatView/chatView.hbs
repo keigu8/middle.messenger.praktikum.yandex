@@ -1,12 +1,10 @@
 <div class="chatView__root">
+  {{#if selected}}
   <div class="chatView__bar chatView__bar_position_top">
     <h2 class="chatView__title">
       {{title}}
     </h2>
-    <button class="chatView__button"><img
-        src="/assets/menu.svg"
-        alt="Меню чата"
-      /></button>
+    {{{OptionsMenuButton}}}
   </div>
   <div class="chatView__messages">
     {{#each messagesByDate}}
@@ -22,9 +20,10 @@
     <textarea
       class="chatView__input"
       placeholder="{{inputPlaceholder}}"
-      name="message"
-      value="{{value}}"
-    ></textarea>
+      name="message" 
+    >{{value}}</textarea>
     {{{Button}}}
   </form>
+  {{else}}
+  {{/if}}
 </div>

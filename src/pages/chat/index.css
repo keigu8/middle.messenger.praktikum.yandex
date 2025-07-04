@@ -1,6 +1,10 @@
 @import url("../../css/uikit.css");
 
 .chat {
+  &__wrapper {
+    height: 100%;
+  }
+  
   &__root {
     --sidebar-width: 310px;
 
@@ -39,5 +43,12 @@
     @mixin typography_text_secondary;
 
     margin: auto;
+  }
+
+  &__button {
+    @mixin button_mode_accent;
+
+    width: 100%;
+    margin: var(--spacing-m) 0;
   }
 }

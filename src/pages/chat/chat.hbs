@@ -1,15 +1,20 @@
-<div class="chat__root">
-  <div class="chat__sidebar">
-    <div class="chat__header">
-      <h1 class="chat__title">{{title}}</h1>
-      <a href="/profile.html" class="chat__link">{{profile.title}}</a>
+<div class="chat__wrapper">
+  <div class="chat__root">
+    <div class="chat__sidebar">
+      <div class="chat__header">
+        <h1 class="chat__title">{{title}}</h1>
+        {{{ProfileButton}}}
+      </div>
+      {{{Form}}}
+      {{{Separator}}}
+      <div class="chat__previews">
+        {{#if showCreateChatButton}}{{{CreateChatButton}}}{{else}}{{{ChatPreviews}}}{{/if}}
+      </div>
     </div>
-    {{{Form}}}
-    {{{Separator}}}
-    <div class="chat__previews">
-      {{{ChatPreviews}}}
-    </div>
+    {{{ChatView}}}
+    {{{OptionsMenu}}}
   </div>
-  {{{ChatView}}}
-  {{{OptionsMenu}}}
+  {{{AddUsersToChatModal}}}
+  {{{DeleteUsersFromChatModal}}}
 </div>
+
