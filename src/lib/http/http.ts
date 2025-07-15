@@ -1,8 +1,9 @@
-import { keys } from "./keys";
+import { keys } from "../keys.ts";
 
 function queryStringify(data: object) {
-  return keys(data).reduce((result, key, index) => {
-    return `${result}${key}=${data[key]}${index < keys.length - 1 ? "&" : ""}`;
+  const props = keys(data);
+  return props.reduce((result, key, index) => {
+    return `${result}${key}=${data[key]}${index < props.length - 1 ? "&" : ""}`;
   }, "?");
 }
 
@@ -63,7 +64,7 @@ export class HTTPTransport {
     }
 
     return new Promise(function (resolve, reject) {
-      const xhr = new XMLHttpRequest();
+      const xhr = new window.XMLHttpRequest();
 
       xhr.open(method, url);
 
@@ -95,7 +96,7 @@ export class HTTPTransport {
 
       xhr.withCredentials = true;
 
-      if (!data) {
+      if (!data || method === HTTPTransport.Method.Get) {
         xhr.send();
         return;
       }

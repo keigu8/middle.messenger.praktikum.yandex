@@ -8,7 +8,7 @@ export function render(html: string) {
     throw new Error("No node in template");
   }
 
-  if (!(node instanceof HTMLElement)) {
+  if (!(node instanceof window.HTMLElement)) {
     throw new Error("Node is not HTMLElement");
   }
 

@@ -1,8 +1,8 @@
 import hbs from "handlebars";
-import { render } from "./render";
-import { random } from "./random";
-import { keys } from "./keys";
-import EventBus from "./eventBus";
+import { render } from "../render.ts";
+import { random } from "../random.ts";
+import { keys } from "../keys.ts";
+import EventBus from "../eventBus.ts";
 
 type Handlers = Record<string, EventListenerOrEventListenerObject>;
 
@@ -75,7 +75,9 @@ export abstract class View<T extends object> {
       set(target: T, property: string, value: any) {
         const oldTarget = { ...target };
         target[property as keyof T] = value;
-        emit(View.Lifecycle.Cdu, oldTarget, target);
+        if (oldTarget[property as keyof T] !== target[property as keyof T]) {
+          emit(View.Lifecycle.Cdu, oldTarget, target);
+        }
         return true;
       },
       deleteProperty() {
