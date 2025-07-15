@@ -62,29 +62,29 @@ describe("HTTPTransport", () => {
   });
 
   it("should send get query with data", async () => {
-    await http.get(url, { data: { foo: "foo", bar: 1, bazz: true } });
+    await http.get(url, { data: { foo: "foo", bar: 42, bazz: true } });
 
-    expect(openSpy.calledWith("GET", `${url}?foo=foo&bar=1&bazz=true`)).to.be
+    expect(openSpy.calledWith("GET", `${url}?foo=foo&bar=42&bazz=true`)).to.be
       .true;
     expect(sendSpy.calledWith()).to.be.true;
   });
 
   it("should send query with data", async () => {
-    await http.post(url, { data: { foo: "foo", bar: 1, bazz: true } });
+    await http.post(url, { data: { foo: "foo", bar: 42, bazz: true } });
 
     expect(openSpy.calledWith("POST", url)).to.be.true;
-    expect(sendSpy.calledWith(`{"foo":"foo","bar":1,"bazz":true}`)).to.be.true;
+    expect(sendSpy.calledWith(`{"foo":"foo","bar":42,"bazz":true}`)).to.be.true;
   });
 
   it("should support formdata", async () => {
     await http.post(url, {
-      data: { foo: "foo", bar: 1, bazz: true },
+      data: { foo: "foo", bar: 42, bazz: true },
       format: "formdata",
     });
 
     const formData = new FormData();
     formData.set("foo", "foo");
-    formData.set("bar", "1");
+    formData.set("bar", "42");
     formData.set("bazz", "true");
 
     expect(openSpy.calledWith("POST", url)).to.be.true;

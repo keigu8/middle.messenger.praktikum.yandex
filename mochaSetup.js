@@ -4,3 +4,4 @@ const jsdom = new JSDOM(`<body></body>`);
 
 global.window = jsdom.window;
 global.document = jsdom.window.document;
+global.HTMLElement = jsdom.HTMLElement;
