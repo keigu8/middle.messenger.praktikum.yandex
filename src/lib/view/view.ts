@@ -1,8 +1,8 @@
 import hbs from "handlebars";
-import { render } from "./render";
-import { random } from "./random";
-import { keys } from "./keys";
-import EventBus from "./eventBus";
+import { render } from "../render";
+import { random } from "../random";
+import { keys } from "../keys";
+import EventBus from "../eventBus";
 
 type Handlers = Record<string, EventListenerOrEventListenerObject>;
 
