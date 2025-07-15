@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { JSDOM } from "jsdom";
 
 const jsdom = new JSDOM(`<body id="root"></body>`, {
