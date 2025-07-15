@@ -1,5 +1,5 @@
-import type { View } from "../view";
-import { Route } from "./route";
+import type { View } from "../view/view.ts";
+import { Route } from "./route.ts";
 import type { Filter } from "./types";
 
 export class Router {
